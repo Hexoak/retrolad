@@ -1,0 +1,115 @@
+body {
+    font-family: Arial;
+    padding: 1px;
+    background: #1f1f1f;
+
+  }
+  
+  /* Header/Blog Title */
+  .header {
+    padding: 0px;
+    font-size:0px;
+    text-align: left;
+    background:#1f1f1f;
+    color: #ddd;
+  }
+  
+  /* Create two unequal columns that floats next to each other */
+  /* Left column */
+  .leftcolumn {
+    float: left;
+    width: 74%;
+    background: #1f1f1f;
+  }
+  
+  /* Right column */
+  .rightcolumn {
+    float: left;
+    width: 25%;
+    padding-left: 8px;
+    background: #1f1f1f;
+  }
+  
+  /* Fake image */
+  .fakeimg {
+    background-color: #aaa;
+    width: 75%;
+    padding: 1px;
+  }
+  
+  /* Add a card effect for articles */
+  .card {
+    background-color:#1f1f1f;
+    padding: 1px;
+    margin-top: 8px;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Footer */
+  .footer {
+    padding: 1px;
+    text-align: center;
+    background:#333;
+    margin-top: 8px;
+  }
+  
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {
+      width: 75%;
+      padding: 0;
+    }
+  }
+
+  .navbar {
+    overflow: hidden; /* Hide overflow */
+    background-color: #333; /* Dark background color */
+  }
+  
+  /* Style the navigation bar links */
+  .navbar a {
+    float: left; /* Make sure that the links stay side-by-side */
+    display: block; /* Change the display to block, for responsive reasons (see below) */
+    color: white; /* White text color */
+    text-align: center; /* Center the text */
+    padding: 8px 8px; /* Add some padding */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  /* Right-aligned link */
+  .navbar a.right {
+    float: right; /* Float a link to the right */
+  }
+  
+  /* Change color on hover/mouse-over */
+  .navbar a:hover {
+    background-color: #ddd; /* Grey background color */
+    color: black; /* Black text color */
+  }
+
+  .content {
+    max-width: 800px;
+    margin: auto;
+  }
+
+h1{
+  color:#A89F94;
+}
+
+  h2{
+    color:#A89F94;
+  }
+  p{
+    font-size: 12px;
+    color:#A89F94
+  }
+
+  a {
+    color: #A89F94;
+  }
