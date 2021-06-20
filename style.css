@@ -98,10 +98,18 @@ body {
     margin: auto;
   }
 
+h1{
+  color:#A89F94;
+}
+
   h2{
     color:#A89F94;
   }
   p{
     font-size: 12px;
     color:#A89F94
+  }
+
+  a {
+    color: #A89F94;
   }
