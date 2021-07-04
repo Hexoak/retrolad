@@ -1,8 +1,8 @@
 var canvas = document.getElementById('can');
 var c = canvas.getContext('2d');
 
-canvas.width = 300 ;
-canvas.height = 150;
+canvas.width = 480 ;
+canvas.height = 432;
 
 //layer 1
 var canvas_stack = new CanvasStack('can');
@@ -27,7 +27,7 @@ function Spawner1 (x, y, dx, dy, radius){
     this.h = h*.25;
 
     this.draw = function(){
-        layer1_ctx.fillStyle = '#A89F94';
+        layer1_ctx.fillStyle = '#5E6745';
         layer1_ctx.fillRect(this.x,this.y,this.h,this.w);
     }
  
@@ -56,7 +56,7 @@ function Spawner2 (x, y, dx, dy, radius){
     this.h = h*2;
 
     this.draw2 = function(){
-        layer2_ctx.fillStyle = '#DDD';
+        layer2_ctx.fillStyle = '#E3EEC0';
         layer2_ctx.fillRect(this.x,this.y,this.h,this.w);
 
     }
@@ -86,7 +86,7 @@ function Spawner3 (x, y, dx, dy, radius){
     this.h = h*1.5;
 
     this.draw3 = function(){
-        layer2_ctx.fillStyle = '#000';
+        layer2_ctx.fillStyle = '#AEBA89';
         layer2_ctx.fillRect(this.x,this.y,this.h,this.w);
 
     }

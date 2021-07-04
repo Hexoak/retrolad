@@ -43,6 +43,12 @@ body {
     padding: 1px;
     margin-top: 8px;
   }
+  .codecard {
+    background-color:black;
+    padding: 1px;
+    margin-top: 8px;
+    color: whitesmoke;
+  }
   
   /* Clear floats after the columns */
   .row:after {

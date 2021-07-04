@@ -18,7 +18,7 @@ body {
   /* Left column */
   .leftcolumn {
     float: left;
-    width: 74%;
+    width: 70%;
     background: #1f1f1f;
   }
   
@@ -55,12 +55,12 @@ body {
   .footer {
     padding: 1px;
     text-align: center;
-    background:#333;
+    background:#202020;
     margin-top: 8px;
   }
   
   /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 882px) {
     .leftcolumn, .rightcolumn {
       width: 75%;
       padding: 0;
@@ -69,7 +69,7 @@ body {
 
   .navbar {
     overflow: hidden; /* Hide overflow */
-    background-color: #333; /* Dark background color */
+    background-color:#5E6745; /* Dark background color */
   }
   
   /* Style the navigation bar links */
@@ -94,12 +94,13 @@ body {
   }
 
   .content {
-    max-width: 800px;
+    max-width: 883px;
     margin: auto;
   }
 
 h1{
   color:#A89F94;
+  font-size: 20px;
 }
 
   h2{
