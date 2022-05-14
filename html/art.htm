@@ -1,3 +1,4 @@
+<!-- Images used to open the lightbox -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,11 +33,140 @@
     <i class="fa fa-bars"></i>
   </a>
 </div>
-
 <h1>ART</h1>
+<p>Click an image to enlarge</p>
+<div class="row">
+    <div class="column">
+      <img src="./src/abandonedCastle05132022 (900x450).gif" onclick="openModal();currentSlide(1)" class="hover-shadow">
+    </div>
+    <div class="column">
+      <img src="./src/Adventure_Awaits.gif" onclick="openModal();currentSlide(2)" class="hover-shadow">
+    </div>
+    <div class="column">
+      <img src="./src/Dystopolis2.gif" onclick="openModal();currentSlide(3)" class="hover-shadow">
+    </div>
+    <div class="column">
+      <img src="./src/Parallax1.gif" onclick="openModal();currentSlide(4)" class="hover-shadow">
+    </div>
+    <div class="column">
+        <img src="./src/Wooded Crypt.gif" onclick="openModal();currentSlide(5)" class="hover-shadow">
+      </div>
+      <div class="column">
+        <img src="./src/GBheroLandscape.gif" onclick="openModal();currentSlide(6)" class="hover-shadow">
+      </div>
+      <div class="column">
+        <img src="./src/Zombie Shack.gif" onclick="openModal();currentSlide(7)" class="hover-shadow">
+      </div>
+      <div class="column">
+        <img src="./src/Magerunner_wolf.gif" onclick="openModal();currentSlide(8)" class="hover-shadow">
+      </div>
+      <div class="column">
+        <img src="./src/minty forest tileset.gif" onclick="openModal();currentSlide(9)" class="hover-shadow">
+      </div>
 
-<script>
-    window.onscroll = function() {navSticky()};
+  </div>
+  
+  <!-- The Modal/Lightbox -->
+  <div id="myModal" class="modal">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+  
+      <div class="mySlides">
+        <div class="numbertext">1 / 9</div>
+        <img src="./src/abandonedCastle05132022 (900x450).gif" style="width:100%">
+      </div>
+  
+      <div class="mySlides">
+        <div class="numbertext">2 / 9</div>
+        <img src="./src/Adventure_Awaits.gif" style="width:100%">
+      </div>
+  
+      <div class="mySlides">
+        <div class="numbertext">3 / 9</div>
+        <img src="./src/Dystopolis2.gif" style="width:100%">
+      </div>
+  
+      <div class="mySlides">
+        <div class="numbertext">4 / 9</div>
+        <img src="./src/Parallax1.gif" style="width:100%">
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">5 / 9</div>
+        <img src="./src/Wooded Crypt.gif" style="width:100%">
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">6 / 9</div>
+        <img src="./src/GBheroLandscape.gif" style="width:100%">
+      </div>
+  
+      <div class="mySlides">
+        <div class="numbertext">7 / 9</div>
+        <img src="./src/Zombie Shack.gif" style="width:100%">
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">8 / 9</div>
+        <img src="./src/Magerunner_wolf.gif" style="width:100%">
+      </div>
+  
+      <div class="mySlides">
+        <div class="numbertext">9 / 9</div>
+        <img src="./src/minty forest tileset.gif" style="width:100%">
+      </div>
+  
+  
+      <!-- Next/previous controls -->
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  
+      <!-- Caption text -->
+      <div class="caption-container">
+        <p id="caption"></p>
+      </div>
+  
+      <!-- Thumbnail image controls -->
+      <div class="column">
+        <img class="demo" src="./src/abandonedCastle05132022 (900x450).gif" onclick="currentSlide(1)" alt="Abandoned Castle - 10 Colors, Piskel">
+      </div>
+  
+      <div class="column">
+        <img class="demo" src="./src/Adventure_Awaits.gif" onclick="currentSlide(2)" alt="Adventure Awaits - 10 Colors, Piskel">
+      </div>
+  
+      <div class="column">
+        <img class="demo" src="./src/Dystopolis2.gif" onclick="currentSlide(3)" alt="GB Dystopolis - 4 Colors, Piskel">
+      </div>
+  
+      <div class="column">
+        <img class="demo" src="./src/Parallax1.gif" onclick="currentSlide(4)" alt="Mountain Paralax">
+      </div>
+
+      <div class="column">
+        <img class="demo" src="./src/Wooded Crypt.gif" onclick="currentSlide(5)" alt="Wooded Crypt">
+      </div>
+
+      <div class="column">
+        <img class="demo" src="./src/GBheroLandscape.gif" onclick="currentSlide(6)" alt="Hero Landscape">
+      </div>
+      
+      <div class="column">
+        <img class="demo" src="./src/Zombie Shack.gif" onclick="currentSlide(7)" alt="Zombie Burn Shack - 10 Colors, Piskel">
+      </div>
+
+      <div class="column">
+        <img class="demo" src="./src/Magerunner_wolf.gif" onclick="currentSlide(8)" alt="Magerunner Wolf - 3 Colors, Piskel">
+      </div>
+
+      <div class="column">
+        <img class="demo" src="./src/minty forest tileset.gif" onclick="currentSlide(8)" alt="Minty Forest Tileset">
+      </div>
+
+    </div>
+  </div>
+  <script>
+      window.onscroll = function() {navSticky()};
     
     var navbar = document.getElementById("topnav");
     var sticky = navbar.offsetTop;
@@ -60,19 +190,44 @@
     }
 
     
+    // Open the Modal
+    function openModal() {
+      document.getElementById("myModal").style.display = "block";
+    }
+    
+    // Close the Modal
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+    
+    var slideIndex = 1;
+    showSlides(slideIndex);
+    
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("demo");
+      var captionText = document.getElementById("caption");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+      captionText.innerHTML = dots[slideIndex-1].alt;
+    }
     </script>
-
-<img src="./src/dashline.gif">
-<div class="footer">
-<h1></h1>
-<p>
-  <a href=http://retrolad.com><img src="./src/8bit_retrolad.gif">retrolad.com - Pixel art and resources</a>
-</p>
-</div>
-<div>
-
-</body>
-</html>
-
-</body>
-</html>
