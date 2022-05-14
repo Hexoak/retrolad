@@ -4,86 +4,76 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>retrolad.com - canvas</title>
+    <title>retrolad.com - pixel art and resources</title>
     <link rel="stylesheet" href="style.css">
+    
 </head>
+
 <body>
-    <div class="content">
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <div class="header">
-          <h1>
-            <a href="http://retrolad.com/"><img src="./src/retrolad banner.png" alt=""></a>
-            <p></p>
-          </h1>
-        </div>
-        
-        <div class="navbar">
-          
-          <a href="art.htm">art</a>
-          <a href="canvas.htm">canvas</a>
-          <a href="phaser.htm">phaser</a>
-          <a href="tools.htm">tools</a>
-          <a href="contact.htm" class="right">contact</a>
-        </div>
-        
-            <div class="row">
-             
-                <div class="leftcolumn">
-                  <h1>CANVAS ARTWORK</h1>
-                  <div class="card">
-        
-                    <h1>
-                      <a href="phaser.htm">"Forest Temple" - 10 colors, Gimp, Canvas</a>
-                    </h1>
-                    <script src ='./CanvasStack-2v01.js'></script>
-                    <canvas id = 'can'></canvas>
-                    <script src = './canvas.js'></script> 
-                    <p> <br><br></p>
+    <!-- Top Navigation Menu -->
+    
+    <div class="topnav">
+        <a href="http://retrolad.com/"><img src="./src/8bit_retrolad.gif"></a>
+    
+  <!-- Navigation links (hidden by default) -->
+  <div id="myLinks">
+    <a href="./blog.htm">BLOG</a>
+    <a href="./art.htm">ART</a>
+    <a href="./canvas.htm">CANVAS</a>
+    <a href="./phaser.htm">PHASER</a>
+    <a href="./tools.htm">TOOLS</a>
+    <a href="./contact.htm" class="right">CONTACT</a>
+  </div>
+  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+  <a href="javascript:void(0);" class="icon" onclick="menuMobile()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
 
-                    <h1>
-                      <a href="canvaspages/woodedCrypt/woodedCrypt.htm">"Wooded Crypt" - 10 colors, Gimp, Canvas</a>
-                      <!-- <canvas id = 'woodedCrypt'></canvas> -->
-                      <!-- <script src = './woodedCrypt.js'></script> -->
-                    </h1>
+<h1>CANVAS</h1>
 
-                  </div>
+<script>
+    window.onscroll = function() {navSticky()};
+    
+    var navbar = document.getElementById("topnav");
+    var sticky = navbar.offsetTop;
+    
+    function navSticky() {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky")
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    }
 
-                  <div class="card">
-                  <h1>tutorials</h1>
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function menuMobile() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+    x.style.display = "none";
+       } else {
+    x.style.display = "block";
+    }
+    }
 
-                  <p> <br><br></p>
+    
+    </script>
 
-                  </div>
-                </div>
-                
-        
-                <div class="rightcolumn">
-                  <div class="card">
-                    <!-- <h2>About Me</h2>
-                    <div class="fakeimg" style="height:100px;">Image</div>
-                    <p>Some text </p> -->
-                  </div>
-                  <div class="card">
-                    <!-- <h3>Popular Post</h3>
-                    <div class="fakeimg">Image</div><br>
-                    <div class="fakeimg">Image</div><br>
-                    <div class="fakeimg">Image</div> -->
-                  </div>
-                  <div class="card">
-                    <!-- <h3>Follow Me</h3>
-                    <p>Some text..</p> -->
-                  </div>
-                </div>
-              </div>
-              
-              <div class="footer">
-                <h1></h1>
-                <p>
-                  <a href=http://retrolad.com>retrolad.com - Pixel art and resources</a>
-                </p>
-              </div>
-            <div>
-        
+<img src="./src/dashline.gif">
+
+<div class="footer">
+<h1></h1>
+<p>
+  <a href=http://retrolad.com><img src="./src/8bit_retrolad.gif">retrolad.com - Pixel art and resources</a>
+</p>
+</div>
+<div>
+
+</body>
+</html>
 
 </body>
 </html>
