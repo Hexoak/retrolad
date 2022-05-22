@@ -6,14 +6,14 @@ canvas.height = window.innerHeight;
 console.log(canvas);
 
 
-//function anim (){
-//    requestAnimationFrame(anim);
-//    c.clearRect(0, 0, innerWidth, innerHeight
-//        );
-//    for (var i = 0; i < circleArray.length; i++) {
-//        circleArray[i].update();
-//
-//        }
-//    }
-//anim();
+function anim (){
+    requestAnimationFrame(anim);
+    c.clearRect(0, 0, innerWidth, innerHeight
+        );
+    for (var i = 0; i < circleArray.length; i++) {
+        circleArray[i].update();
+
+        }
+    }
+anim();
 
