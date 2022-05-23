@@ -33,95 +33,12 @@
   </a>
 </div>
 
-<h1>CANVAS</h1>
+<h1>HOW TO PIXEL ART</h1>
 
-<canvas>
-  <script>
-var canvas = document.querySelector('canvas');
-var c = canvas.getContext('2d');
-canvas.height = 300
-canvas.width = 600
-
-
-function Spawner (x, y, dx, dy, radius){
-    this.x = Math.random()*innerWidth;
-    this.y = y;
-    this.dx = dx;
-    this.dy = dy;
-    this.radius = radius
-    this.w = w;
-    this.h = h;
-
-
-    this.draw = function(){
-
-        c.fillStyle = '#aeba89';
-        c.fillRect(this.x,this.y,this.h,this.w);
-        //c.fill();
-    }
-        this.update =function(){
-            if (this.x  > innerWidth || this.x +1 < 0){
-                this.x= 600;
-            }
-        
-            if (this.y > innerHeight){
-                this.y = 600;
-            }
-        
-            this.x += this.dx; 
-            this.y += this.dy; 
-
-            this.draw();
-        }
-}
-
-
-var spawnArray = [];
-
-for (var i = 0; i < 1000; i++){
-   
-    
-    var radius = Math.random() * 100;
-    var x = Math.random() * (innerWidth - radius *4) + radius;
-    var y = Math.random() * (innerHeight - radius *4) + radius;
-    var dx = (Math.random() * -1);
-    var dy = (Math.random() *-1);
-    var h = Math.random() * 6;
-    var w = h
-
-    spawnArray.push(new Spawner(x,y,dx,dy,radius));
-
-}
-
-
-console.log (spawnArray);
-
-function anim (){
-    requestAnimationFrame(anim);
-    c.clearRect(0, 0, innerWidth, innerHeight
-        );
-
-
-    for (var i = 0; i < spawnArray.length; i++) {
-        spawnArray[i].update();
-
-    }
-    }
-
-anim();
-  </script>
-  </canvas>
-<br>
-<p1>
-  <br>Here you will find some tutorials on basic HTML Canvas use<br><br>
-We can use Canvas to add animation or random generation to our art utilizing HTML, CSS and Javascipt 
-<br>
-<br>
-<br>
-</p1>
-<h1>
-  <a href="./learnCanvas/canvas_01.htm">Lesson 1 - Basic Canvas Initialization</a><br>
-</h1>
+<img src="./src/howtoRocks.gif">
+<br><br>
+<img src="./src/howtoWalls.gif">
+<br><br>
 
 <script>
     window.onscroll = function() {navSticky()};
@@ -155,7 +72,7 @@ We can use Canvas to add animation or random generation to our art utilizing HTM
 <div class="footer">
 <h1></h1>
 <p>
-  <a href=http://retrolad.com><img src="./src/8bit_retrolad.gif">retrolad.com - Pixel art and resources</a>
+    <a href=http://retrolad.com><img src="./src/8bit_retrolad.gif">retrolad.com - Pixel art and resources</a>
 </p>
 </div>
 <div>
