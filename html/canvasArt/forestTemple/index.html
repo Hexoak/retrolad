@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retrolad.com - pixel art and resources</title>
+    <link rel="stylesheet" href="../../../style.css">
+
+</head>
+
+<body>
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Top Navigation Menu -->
+    
+    <div class="topnav">
+        <a href="http://retrolad.com/"><img src="../../src/8bit_retrolad.gif"></a>
+    
+  <!-- Navigation links (hidden by default) -->
+  <div id="myLinks">
+    <a href="http://retrolad.com/html/howTo.htm">TIPS AND TRICKS</a>
+    <a href="http://retrolad.com/html/art.htm">ART</a>
+    <a href="http://retrolad.com/html/canvas.htm">CANVAS</a>
+    <a href="http://retrolad.com/html/phaser.htm">PHASER</a>
+    <a href="http://retrolad.com/html/tools.htm">TOOLS</a>
+    <a href="http://retrolad.com/html/contact.htm" class="right">CONTACT</a>
+  </div>
+  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+  <a href="javascript:void(0);" class="icon" onclick="menuMobile()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+<body>
+  <br><br>
+    <h1>Forest Temple </h1><br><br>
+    <p1>
+      900x450px<br><br>
+    10 colors, Piskel, Gimp, HTML5 Canvas
+    </p1><br><br>
+    Notes: <br><br>
+    Created in Piskel and refined in Gimp to allow transparencies <br>
+    Exported as layers and animated using CanvasStack 2.0<br><br>
+    <p1>
+    <script src ='CanvasStack-2v01.js'></script>
+    <canvas id = 'can'></canvas>
+    <script src = "canvas.js"></script> 
+</p1>
+</body>
+</html>
+<script>
+    window.onscroll = function() {navSticky()};
+    
+    var navbar = document.getElementById("topnav");
+    var sticky = navbar.offsetTop;
+    
+    function navSticky() {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky")
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    }
+
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function menuMobile() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+    x.style.display = "none";
+       } else {
+    x.style.display = "block";
+    }
+    }
+
+    
+    </script>
+
+<img src="../../src/dashline.gif">
+
+<div class="footer">
+<h1></h1>
+<p>
+  <a href=http://retrolad.com><img src="../../../src/8bit_retrolad.gif">retrolad.com - Pixel art and resources</a>
+</p>
+</div>
+<div>
+
+</body>
+</html>
+
+</body>
+</html>
