@@ -4,9 +4,9 @@ class mainScene {
   preload() {
     // It will load all the assets, like sprites and sounds
 
-    this.load.image('player', 'assets/player.png'); 
-    this.load.image('wall', 'assets/wall.png');
-    this.load.image('collect', 'assets/collect.png');
+    this.load.image('player', './assets/player.png'); 
+    this.load.image('wall', './assets/wall.png');
+    this.load.image('collect', './assets/collect.png');
     //colors #2b2b26, #706b66, #a89f94, #e0dbcd
 
   
