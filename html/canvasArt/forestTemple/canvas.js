@@ -1,13 +1,12 @@
 //init
 var canvas = document.getElementById('can');
 var c = canvas.getContext('2d');
-canvas.width  = 900;
-canvas.height = 450;
-
+canvas.width  = 300 ;
+canvas.height = 150;
 
 //Load and set image files
 var img_lay1 = new Image();
-img_lay1.src = './src/1_fore.png';
+img_lay1.src = './src/1_fore.png'
 var img_lay2 = new Image();
 img_lay2.src = './src/2_midfor.png';
 var img_lay3 = new Image();
@@ -75,16 +74,16 @@ var dy3 = .01;
 
     //Draw layers
     this.draw = function(){
-    layer1_ctx.drawImage(img_lay10, 0,0,900,450);
-    layer2_ctx.drawImage(img_lay9, 0,y1,900,450);
-    layer3_ctx.drawImage(img_lay8, 0,20,900,450);
-    layer4_ctx.drawImage(img_lay7, x2,0,900,450);
-    layer5_ctx.drawImage(img_lay6, x1,0,900,450);
-    layer6_ctx.drawImage(img_lay5, 0,0,900,450);
-    layer7_ctx.drawImage(img_lay4, x1,0,900,450);
-    layer8_ctx.drawImage(img_lay3, x3,0,900,450);
-    layer9_ctx.drawImage(img_lay2, 0,0,900,450);
-    layer10_ctx.drawImage(img_lay1, 0,0,900,450);
+    layer1_ctx.drawImage(img_lay10, 0,0,300,150);
+    layer2_ctx.drawImage(img_lay9, 0,y1,300,150);
+    layer3_ctx.drawImage(img_lay8, 0,20,300,150);
+    layer4_ctx.drawImage(img_lay7, x2,0,300,150);
+    layer5_ctx.drawImage(img_lay6, x1,0,300,150);
+    layer6_ctx.drawImage(img_lay5, 0,0,300,150);
+    layer7_ctx.drawImage(img_lay4, x1,0,300,150);
+    layer8_ctx.drawImage(img_lay3, x3,0,300,150);
+    layer9_ctx.drawImage(img_lay2, -x1,0,300,150);
+    layer10_ctx.drawImage(img_lay1, 0,0,300,150);
     
     //add anim vars here    
     //console.log(x3);
@@ -131,7 +130,7 @@ function anim (){
     layer8_ctx.clearRect(0, 0, innerWidth, innerHeight);
     layer9_ctx.clearRect(0, 0, innerWidth, innerHeight);
     layer10_ctx.clearRect(0, 0, innerWidth, innerHeight);
-    c.scale(3,0);
+
     this.draw();
     //console.log('anim');
 }
