@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retrolad.com - pixel art and resources</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Top Navigation Menu -->
+    
+    <div class="topnav">
+        <a href="http://retrolad.com/"><img src="./src/8bit_retrolad.gif"></a>
+    
+  <!-- Navigation links (hidden by default) -->
+  <div id="myLinks">
+    <a href="http://retrolad.com/html/howTo.htm">TIPS AND TRICKS</a>
+    <a href="http://retrolad.com/html/art.htm">ART</a>
+    <a href="http://retrolad.com/html/canvas.htm">CANVAS</a>
+    <a href="http://retrolad.com/html/phaser.htm">PHASER</a>
+    <a href="http://retrolad.com/html/tools.htm">TOOLS</a>
+    <a href="http://retrolad.com/html/contact.htm" class="right">CONTACT</a>
+  </div>
+  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+  <a href="javascript:void(0);" class="icon" onclick="menuMobile()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+<h1>Canvas Lesson 01 - Initializing Canvas</h1>
+
+<canvas>
+  <script>
+var canvas = document.querySelector('canvas');
+var c = canvas.getContext('2d');
+canvas.width = 640;
+canvas.height = 360;
+
+var x = 16;
+var y = 16;
+var dx = 1;
+var dy = Math.random()*canvas.height;
+c.fillStyle = "black"
+
+function animate (){
+	requestAnimationFrame(animate);
+  c.clearRect(0,0,canvas.width,canvas.height);
+    c.fillRect (dx,dy,x,y);
+    dx = dx+1;
+    dy=dy+Math.random();
+    if (dx > canvas.width){
+      dx=0;
+    }
+    if (dy > canvas.height){
+      dy = 0;
+    }
+
+    c.font ="30px Ariel";
+    c.fillText("X:" + dx +"  "+"Y:" + dy,canvas.width/2,350);
+
+}
+animate ()
+
+  </script>
+  </canvas>
+<br>
+<h1>Initializing, Drawing and Animation</h1>
+
+<p1>
+  <br><b>In this lesson, we will cover some basic items you will need to begin animating in Canvas</b><br><br>
+We can use Canvas to add animation or random generation to our art utilizing HTML, CSS and Javascipt 
+<br><br>
+
+</p1>
+
+<blockquote>
+  First we will need to get the tools needed to start: <br>
+Links to the needed items are found on the <a href= "http://retrolad.com/html/tools.htm">Tools</a> section of this website.<br><br>
+1. Some sort of Code editor (I like VSCode)<br>
+2. Some way to utilize html pages (Dragging the file into an internet browser will do)<br>
+3. Some Basic code to start.<br><br>
+</blockquote>
+
+<p1>
+This lesson will assume you have some familiarity with HTML, CSS and Javascript.<br>
+If you do not, do not be detered-- <a href = "https://www.w3schools.com">w3schools.com</a> is a great place to start getting exposure and building your code library.<br>
+<br><br>
+Understanding the basics of how "<i>&lt;tags&gt;&lt;/tags&gt;</p1></i>" operate in HTML is implied here.
+
+<h1>Getting started</h1>
+<p1>
+  Here is the code used in the example above. <br><br>
+  This canvas is imbedded into our HTML page utilzing the tags for "canvas" and "script".
+<Blockquote>
+  <pre>
+    &lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;canvas&gt;
+        &lt;script&gt;
+      var canvas = document.querySelector('canvas');
+      var c = canvas.getContext('2d');
+      canvas.width = 640;
+      canvas.height = 360;
+      
+      var x = 16;
+      var y = 16;
+      var dx = 1;
+      var dy = Math.random()*canvas.height;
+      c.fillStyle = "black"
+      
+      function animate (){
+          requestAnimationFrame(animate);
+        c.clearRect(0,0,canvas.width,canvas.height);
+          c.fillRect (dx,dy,x,y);
+          dx = dx+1;
+          dy=dy+Math.random();
+          if (dx &gt; canvas.width){
+            dx=0;
+          }
+          if (dy &gt; canvas.height){
+            dy = 0;
+          }
+          c.font ="30px Ariel";
+          c.fillText("X:" + dx +"  "+"Y:" + dy,canvas.width/2,350);
+      }
+      animate ()
+      
+        &lt;/script&gt;
+        &lt;/canvas&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</Blockquote>
+<br>
+<br>
+First we can see all of the boilerplate HTML is unchanged - The first modification is invoking the <b>&lt;canvas&gt;</b> element and then charging it with a <b>&lt;script&gt;</b> tag.<br><br>
+This script used here is Javascript, which can be read inherently by most modern browsers; as Canvas was designed.<br><br>
+Without getting into command syntax or functions (thats for later); We can break down what is happening in these short 40-some lines of code:<br><br>
+
+<blockquote>
+  <pre>var canvas = document.querySelector('canvas');
+    var c = canvas.getContext('2d');
+    canvas.width = 640;
+    canvas.height = 360;</pre>
+</blockquote>
+This sets some common paths within Canvas to usable varialbes and then applies them to set the Canvas height and width.
+<br><br>
+<blockquote>
+  <pre>
+  var x = 16;
+      var y = 16;
+      var dx = 1;
+      var dy = Math.random()*canvas.height;
+      c.fillStyle = "black"
+    </pre>
+</blockquote>
+We then set some additional variables:<br><br>
+The height and width of the square to draw,<br>
+The inital veloicity of the square (dx, dy)<br>
+and the color (c.fillstyle).<br><br>
+<blockquote>
+  <pre>
+    function animate (){
+      requestAnimationFrame(animate);
+    c.clearRect(0,0,canvas.width,canvas.height);
+      c.fillRect (dx,dy,x,y);
+      dx = dx+1;
+      dy=dy+Math.random();
+      if (dx &gt; canvas.width){
+        dx=0;
+      }
+      if (dy &gt; canvas.height){
+        dy = 0;
+      }
+      c.font ="30px Ariel";
+      c.fillText("X:" + dx +"  "+"Y:" + dy,canvas.width/2,350);
+  }
+  animate ()
+  </pre>
+</blockquote>
+And now the magic: <br>
+Theres alot going on in these few lines.<br><br>
+Frist, we call a function called "animate()".<br><br>
+The Animate() function has two main parts: <br>
+<blockquote>
+1. It utilizes a built-in (requestAnimationFrame()) function, and it invokes a "clear" of the canvas every frame (c.clearRect)<br>
+2. It loops forever, continuously clearing and writing the function code, as we are passing the parameters into itself.<br><br>
+</blockquote>
+<br>Within the Animate funtion, we "do stuff" with our code utilizing our pre-defined variables.<br>
+<blockquote>
+  <pre>
+  c.fillRect (dx,dy,x,y);
+      dx = dx+1;
+      dy=dy+Math.random();
+      if (dx &gt; canvas.width){
+        dx=0;
+      }
+      if (dy &gt; canvas.height){
+        dy = 0;
+      }
+    </pre>
+</blockquote>
+The line <b>"c.fillRect(dx,dy,x,y);"</b> takes the variable inputs <i>(position x, position y, size x, size y)</i>
+<br>
+The function then over-rights these varabiles in the animate loop (every "frame").
+<br><br>
+We then have two "if" statements:<br>
+These do checks against our little square and change variables when certain conditions are met. <br><br></be>For instance, when (position X or Y) is beyond the Canvas frame, it will reset it to the other side.
+<br>
+<blockquote>
+  <pre>
+  c.font ="30px Ariel";
+  c.fillText("X:" + dx +"  "+"Y:" + dy,canvas.width/2,350);
+</pre>
+</blockquote>
+</p1>
+The last lines are mostly aesthetics: <br> <br>
+This writes the text on the screen utilizing the <b>(c.fillText)</b> command to show both the X and Y position at any time.<br><br>
+Using output in this way, or in the console (console.log) are two great ways to check your functionality.<br>
+
+<blockquote>
+  <pre>
+}
+animate ()
+</pre>
+</blockquote>
+<br>
+Finally, outside of the context of our animation function, we again call the animate() function. <br><br>
+As the code executes, it will get caught in this loop, and this function will run repeatedly, forever.<br><br>
+
+<h1>
+  Thats it!
+</h1>
+<p1>
+  You did it, and we are all so very proud.<br><br>
+  You can take these basics and modify your varables to see different behaviors.<br><br>
+  Save this HTML into a file and keep it in your library for use or reference later.<br><br>
+
+</p1>
+
+<script>
+    window.onscroll = function() {navSticky()};
+    
+    var navbar = document.getElementById("topnav");
+    var sticky = navbar.offsetTop;
+    
+    function navSticky() {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky")
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    }
+
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function menuMobile() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+    x.style.display = "none";
+       } else {
+    x.style.display = "block";
+    }
+    }
+
+    
+    </script>
+
+<img src="./src/dashline.gif">
+
+<div class="footer">
+<h1></h1>
+<p>
+  <a href=http://retrolad.com><img src="./src/8bit_retrolad.gif">retrolad.com - Pixel art and resources</a>
+</p>
+</div>
+<div>
+
+</body>
+</html>
+
+</body>
+</html>
