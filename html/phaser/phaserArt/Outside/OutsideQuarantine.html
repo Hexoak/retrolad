@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retrolad.com - pixel art and resources</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.24.1/dist/phaser.min.js"></script>
+    
+</head>
+
+<body>
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Top Navigation Menu -->
+    
+    <div class="topnav">
+        <a href="http://retrolad.com/"><img src=".\assets\8bit_retrolad.gif"></a>
+    
+  <!-- Navigation links (hidden by default) -->
+  <div id="myLinks">
+    <a href="../../../howTo.htm">TIPS AND TRICKS</a>
+    <a href="../../../art.htm">ART</a>
+    <a href="../../../canvas.htm">CANVAS</a>
+    <a href="../../../phaser.htm">PHASER</a>
+    <a href="../../../tools.htm">TOOLS</a>
+    <a href="../../../contact.htm" class="right">CONTACT</a>
+  </div>
+  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+  <a href="javascript:void(0);" class="icon" onclick="menuMobile()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div><html>
+    <head>
+        
+    </head>
+    <body>
+        <br><br>
+        <div id="game"></div>
+        <script>
+
+            const phaserConfig = {
+                type: Phaser.AUTO,
+                parent: "game",
+                width: 640,
+                height: 360,
+                backgroundColor: "#1a1a1a",
+                scene: {
+                    init: initScene,
+                    preload: preloadScene,
+                    create: createScene,
+                    update: updateScene,
+
+                }
+            };
+
+            const game = new Phaser.Game(phaserConfig);    
+
+            function initScene() { }
+            function preloadScene() {
+                this.load.image("bg2", "assets/bg2.png");
+                this.load.image("bg1", "assets/bg1.png");
+                this.load.image("bg3", "assets/bg3.png");
+                this.load.image("bg4", "assets/bg4.png");
+                this.load.spritesheet('player', 'assets/New Piskel.png',{frameWidth:64,frameHeight:64});
+                this.load.image("rl", "assets/titles.png");
+
+            }
+            function createScene() {
+            bg3 = this.add.tileSprite(320, 270, 640, 360, "bg3");
+            bg4 = this.add.tileSprite(320, 260, 640, 360, "bg4");
+            bg2 = this.add.tileSprite(320, 270, 640, 360, "bg2");
+            bg1 = this.add.tileSprite(320, 265, 640, 360, "bg1");
+            player = this.add.sprite(300, 310, 'player');
+            rl = this.add.image(320, 180, "rl");
+           
+            //player anim
+            this.anims.create({
+                key: 'left',
+                frames: this.anims.generateFrameNumbers('player', { start: 0, end: 5 }),
+                frameRate: 6,
+                repeat: 0,});
+
+        //**camera - Init and follow player */
+        const camera = this.cameras.main;
+        this.cameras.main.zoom = 2;
+        // camera.roundPixels = false;
+        //camera.startFollow(player);
+        //camera.startFollow(player, [false], [1], [1], [0], [0]);
+        //camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+  
+this.i = 1;
+
+            }
+
+            function updateScene() {
+                
+                bg1.tilePositionX += 0.60;
+                bg2.tilePositionX += 0.30;
+                bg4.tilePositionX += 0.25;
+                bg3.tilePositionX += 0.125;
+
+                player.anims.play('left', true);
+
+
+                var cam = this.cameras.main;
+                    //cam.pan(300, 300, 300, 'Power2');
+                    
+                    this.i++;
+                    if (this.i < 10){
+                    cam.zoomTo(1.5,5000)
+                    cam.pan(300, 290, 6000, 'Power2');
+                    }
+                    if (this.i > 500){
+                    cam.zoomTo(2.50,4000)
+                    cam.pan(310, 300, 6000, 'Power2');
+                    }
+                    if (400 < this.i < 900){
+                    cam.zoomTo(1.5,2000)
+                    cam.pan(380, 280, 8000, 'Power2');
+                    }
+                    if (900 < this.i < 1500){
+                    cam.zoomTo(1.75,6000)
+                    cam.pan(320, 310, 6000, 'Power2');
+                    }
+                    if (this.i > 1500){
+                        this.i = 1;
+                    }
+                    
+               // console.log(this.i) 
+
+            }
+
+   
+        window.onscroll = function() {navSticky()};
+    
+    var navbar = document.getElementById("topnav");
+    var sticky = navbar.offsetTop;
+    
+    function navSticky() {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky")
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    }
+
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function menuMobile() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+    x.style.display = "none";
+       } else {
+    x.style.display = "block";
+    }
+    }
+
+    
+    </script>
+<br><br>
+<img src="./assets/dashline.gif">
+
+<div class="footer">
+<h1></h1>
+<p>
+  <a href=http://retrolad.com><img src="./assets/8bit_retrolad.gif">retrolad.com - Pixel art and resources</a>
+</p>
+</div>
+<div>
+
+</body>
+</html>
+
+</body>
+</html>
+    </body>
+</html>
