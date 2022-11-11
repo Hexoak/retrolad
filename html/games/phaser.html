@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retrolad.com - pixel art and resources</title>
+    <link rel="stylesheet" href="../../../style.css">
+    
+</head>
+
+<body>
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Top Navigation Menu -->
+    
+    <div class="topnav">
+        <a href="http://retrolad.com/"><img src="../../src/8bit_retrolad.gif"></a>
+    
+  <!-- Navigation links (hidden by default) -->
+  <div id="myLinks">
+    <a href="../art/art.html">ART</a>
+    <a href="../games/phaser.html">GAMES</a>
+    <a href="../media/media.html">MEDIA</a>
+    <a href="../tools/tools.html">TOOLS</a>
+    <a href="../contact/contact.html" class="right">CONTACT</a>
+  </div>
+  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+  <a href="javascript:void(0);" class="icon" onclick="menuMobile()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+<h1>GAMES</h1>
+<a href="../games/BoneCollector/index.html"><img src="../art/src/BoneCollectorSplash.gif"></a>
+<br>
+<h1>Bone Collector</h1>
+    <p>
+        Bone Collector is a basic, top-down Dot Grabber made in Phaser.io<br><br>
+        Original Art, Program, and Music assets by Retrolad.com<br><br>
+        ( NOTE ) Will not work on Mobile
+   </p>
+<script>
+    window.onscroll = function() {navSticky()};
+    
+    var navbar = document.getElementById("topnav");
+    var sticky = navbar.offsetTop;
+    
+    function navSticky() {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky")
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    }
+
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function menuMobile() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+    x.style.display = "none";
+       } else {
+    x.style.display = "block";
+    }
+    }
+
+    
+    </script>
+
+
+</body>
+</html>
+
+</body>
+</html>
