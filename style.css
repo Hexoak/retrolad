@@ -125,5 +125,19 @@ a:link {
 
 /* visited link */
 a:visited {
-  color: #4d533c;
+  color: #c4cfa1;
+  ;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: auto;
+  padding: 10px;
+}
+.grid-item {
+
+
+  padding: 20px;
+  font-size: 12x;
+  text-align: center;
+}
+
