@@ -11,6 +11,7 @@ class Boot extends Phaser.Scene {
         this.load.spritesheet('player', './assets/all8d-w-idle.png',{frameWidth:40,frameHeight:64});
         this.load.spritesheet('dog', './assets/dogall.png',{frameWidth:32,frameHeight:32});
         this.load.spritesheet('deer', './assets/deerAll.png',{frameWidth:64,frameHeight:64});
+        this.load.spritesheet('crow', './assets/crowAll.png',{frameWidth:16,frameHeight:16});
         this.load.image('mask', './assets/mask.png');
         this.load.image('bg', './assets/bg.png');
         this.load.image('tree1', './assets/tree1.gif');

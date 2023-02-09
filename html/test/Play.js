@@ -28,6 +28,8 @@ class Play extends Phaser.Scene {
         this.deer2 = this.physics.add.sprite(228,350, 'deer');
         this.deer3 = this.physics.add.sprite(392,350, 'deer');
         this.deer4 = this.physics.add.sprite(456,350, 'deer');
+        this.crow = this.physics.add.sprite(456,150, 'crow');
+        this.crow2 = this.physics.add.sprite(500,150, 'crow');
 
         //----
         this.cover = this.add.image(x, y, 'mask')
@@ -165,6 +167,18 @@ class Play extends Phaser.Scene {
       frameRate: 6,
       repeat: -1,});
 
+    //crow anims
+    this.anims.create({
+      key: 'crow-idle',
+      frames: this.anims.generateFrameNumbers('crow', { start: 0, end: 3 }),
+      frameRate: 4,
+      repeat: -1,});
+    this.anims.create({
+      key: 'crow-flies',
+      frames: this.anims.generateFrameNumbers('crow', { start: 4, end: 7 }),
+      frameRate: 8,
+      repeat: -1,});
+
     //**camera - Init and follow player */
     const camera = this.cameras.main;
     this.cameras.main.zoom = 1.5;
@@ -181,6 +195,9 @@ class Play extends Phaser.Scene {
       this.deer2.anims.play('deer-walk');
       this.deer3.anims.play('deer-runs');
       this.deer4.anims.play('deer-eats');
+
+      this.crow.anims.play('crow-idle');
+      this.crow2.anims.play('crow-flies');
 
   }   //...create()
   
