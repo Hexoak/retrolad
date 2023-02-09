@@ -16,11 +16,18 @@ class Play extends Phaser.Scene {
         const y = 240;
 
         const reveal = this.add.image(x, y, 'bg' )
+        //this.add.image(x, y, 'bg' ).alpha =.5;
         //reveal.setScale(4);
 
         //----add shit here in between the masks
         this.dog2 = this.physics.add.sprite(350, 200, 'dog');
         this.dog = this.physics.add.sprite(50, 200, 'dog');
+        this.add.image(140,140, 'tree1');
+        this.add.image(200,140, 'tree3');
+        this.deer = this.physics.add.sprite(164,350, 'deer');
+        this.deer2 = this.physics.add.sprite(228,350, 'deer');
+        this.deer3 = this.physics.add.sprite(392,350, 'deer');
+        this.deer4 = this.physics.add.sprite(456,350, 'deer');
 
         //----
         this.cover = this.add.image(x, y, 'mask')
@@ -136,6 +143,28 @@ class Play extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,});
 
+    //deer anims
+    this.anims.create({
+      key: 'deer-idle',
+      frames: this.anims.generateFrameNumbers('deer', { start: 0, end: 3 }),
+      frameRate: 4,
+      repeat: -1,});
+    this.anims.create({
+      key: 'deer-walk',
+      frames: this.anims.generateFrameNumbers('deer', { start: 4, end: 7 }),
+      frameRate: 6,
+      repeat: -1,});
+    this.anims.create({
+      key: 'deer-runs',
+      frames: this.anims.generateFrameNumbers('deer', { start: 8, end: 11 }),
+      frameRate: 10,
+      repeat: -1,});
+    this.anims.create({
+      key: 'deer-eats',
+      frames: this.anims.generateFrameNumbers('deer', { start: 12, end: 19 }),
+      frameRate: 6,
+      repeat: -1,});
+
     //**camera - Init and follow player */
     const camera = this.cameras.main;
     this.cameras.main.zoom = 1.5;
@@ -147,6 +176,11 @@ class Play extends Phaser.Scene {
       this.dog2.anims.play('dog-sits').once('animationcomplete', () => {
       this.dog2.anims.play('sits-idle');
      });
+
+     this.deer.anims.play('deer-idle');
+      this.deer2.anims.play('deer-walk');
+      this.deer3.anims.play('deer-runs');
+      this.deer4.anims.play('deer-eats');
 
   }   //...create()
   
@@ -239,7 +273,9 @@ class Play extends Phaser.Scene {
 
   flashlight(){
           //flashlight items
-          var r = Math.random()*1.25 +100
+          //var r = Math.random()*1.25 +100
+            //setInterval for flashlight 'flicker'?
+          var r = 64
           const x = this.player.x - this.cover.x + this.cover.width * 0.5
           const y = this.player.y - this.cover.y + this.cover.height * 0.5
           this.renderTexture.clear()
@@ -249,7 +285,7 @@ class Play extends Phaser.Scene {
         this.light = this.add.circle(0, 0, r, 0x000000, 1)
         this.light.visible = false
 
-        console.log(r)
+        //console.log(r)
 
           
   }
