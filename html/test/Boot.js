@@ -17,6 +17,7 @@ class Boot extends Phaser.Scene {
         this.load.image('tree1', './assets/tree1.gif');
         this.load.image('tree3', './assets/tree3.gif');
         this.load.image('deerstatic', './assets/deer.gif');
+        this.load.image('rain', './assets/rain.gif');
 
 
         this.load.on(`complete`, () => {

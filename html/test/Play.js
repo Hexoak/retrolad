@@ -14,7 +14,8 @@ class Play extends Phaser.Scene {
         const x = 320;
         const y = 240;
 
-        const reveal = this.add.image(x, y, 'bg' )
+        this.bg = this.add.image(x, y, 'bg' )
+        const reveal = this.bg
 
     //----add shit here in between the masks
         this.dog2 = this.physics.add.sprite(350, 200, 'dog');
@@ -30,7 +31,7 @@ class Play extends Phaser.Scene {
 
     //----
         this.cover = this.add.image(x, y, 'mask')
-        this.cover.alpha = 0.65;
+        this.cover.alpha = 0.50;
         this.cover.setScale(4);
 
     //player (above mask)
@@ -201,6 +202,10 @@ class Play extends Phaser.Scene {
       this.handleInput();
       this.flashlight();
       this.dogFollows();
+      this.rain();
+
+
+
       this.deer2.setVelocityX(50)
       this.deer3.setVelocityX(105)
       this.deer3.setVelocityY(-105);
@@ -292,9 +297,9 @@ class Play extends Phaser.Scene {
 
   flashlight(){
           //flashlight items
-          //var r = Math.random()*1.25 +100
+          var r = Math.random()*1.25 +64
             //setInterval for flashlight 'flicker'?
-          var r = 64
+            //var r = 64
           const x = this.player.x - this.cover.x + this.cover.width * 0.5
           const y = this.player.y - this.cover.y + this.cover.height * 0.5
           this.renderTexture.clear()
@@ -369,6 +374,37 @@ class Play extends Phaser.Scene {
     dogCasetest(){
 
     }//...dogCasetest
+
+    rain(){
+      //weather effects:
+
+      var raindrops = this.add.group({ defaultKey: 'raindrop' });
+
+      var spawnRaindrop = function () {
+        var x = Phaser.Math.Between(0, this.sys.game.config.width);
+        var y = Phaser.Math.Between(0, this.sys.game.config.width);
+        var raindrop = raindrops.create(x, y, 'rain');
+        raindrop.setScale(Phaser.Math.Between(0.25, 1));
+        this.tweens.add({
+          targets: raindrop,
+          y: this.sys.game.config.height + 5,
+          //x: this.sys.game.config.height + 5,
+          duration: Phaser.Math.Between(1000, 2000),
+          ease: 'Linear',
+          onComplete: function (tween, targets) {
+            targets[0].destroy();
+          }
+        });
+      };
+
+      this.time.addEvent({
+        delay: 1000,
+        callback: spawnRaindrop,
+        callbackScope: this,
+        loop: true
+      });
+
+    }
   
 } //...gameAll()
 
