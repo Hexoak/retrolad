@@ -7,40 +7,37 @@ class Play extends Phaser.Scene {
   
     create() {
       console.log('game init')
-
       this.cursors = this.input.keyboard.createCursorKeys();
 
-             //flashlight
+    //flashlight
         console.log('flashlight')
         const x = 320;
         const y = 240;
 
         const reveal = this.add.image(x, y, 'bg' )
-        //this.add.image(x, y, 'bg' ).alpha =.5;
-        //reveal.setScale(4);
 
-        //----add shit here in between the masks
+    //----add shit here in between the masks
         this.dog2 = this.physics.add.sprite(350, 200, 'dog');
         this.dog = this.physics.add.sprite(50, 200, 'dog');
         this.add.image(140,140, 'tree1');
         this.add.image(200,140, 'tree3');
         this.deer = this.physics.add.sprite(164,350, 'deer');
-        this.deer2 = this.physics.add.sprite(228,350, 'deer');
-        this.deer3 = this.physics.add.sprite(392,350, 'deer');
+        this.deer2 = this.physics.add.sprite(164,250, 'deer');
+        this.deer3 = this.physics.add.sprite(164,350, 'deer');
         this.deer4 = this.physics.add.sprite(456,350, 'deer');
         this.crow = this.physics.add.sprite(456,150, 'crow');
-        this.crow2 = this.physics.add.sprite(500,150, 'crow');
+        this.crow2 = this.physics.add.sprite(640,480, 'crow');
 
-        //----
+    //----
         this.cover = this.add.image(x, y, 'mask')
         this.cover.alpha = 0.65;
         this.cover.setScale(4);
 
-        //player (above mask)
+    //player (above mask)
         this.player = this.physics.add.sprite(300, 200, `player`);
           this.player.setOrigin(0.5, 0.5);
       
-        //----
+    //----
 
         const width = this.cover.width
         const height = this.cover.height
@@ -63,7 +60,6 @@ class Play extends Phaser.Scene {
         this.cover.setTint('#3a3a3a',5000)
       
         reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage)
-
 
         this.renderTexture = rt 
 
@@ -205,6 +201,12 @@ class Play extends Phaser.Scene {
       this.handleInput();
       this.flashlight();
       this.dogFollows();
+      this.deer2.setVelocityX(50)
+      this.deer3.setVelocityX(105)
+      this.deer3.setVelocityY(-105);
+
+      this.crow2.setVelocityX(-150);
+      this.crow2.setVelocityY(-150);
 
   }   //...update()
   
@@ -302,10 +304,8 @@ class Play extends Phaser.Scene {
         this.light = this.add.circle(0, 0, r, 0x000000, 1)
         this.light.visible = false
 
-        //console.log(r)
-
-          
-  }
+        //console.log(r)    
+  } //...flashlight()
 
       dogFollows() {
         //addditions - Sproatic dog movements. "cases"?
@@ -370,5 +370,6 @@ class Play extends Phaser.Scene {
 
     }//...dogCasetest
   
-}     //...gameAll()
+} //...gameAll()
+
 

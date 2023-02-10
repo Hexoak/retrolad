@@ -17,14 +17,15 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-game.scale.on('resize', function (gameSize, baseSize, displaySize, resolution) {
-  if (game.scale.isFullscreen) {
-    game.scale.setGameSize(displaySize.width, displaySize.height);
-  }
-});
-
-game.scale.fullscreenTarget = document.getElementById('gameContainer');
-
-document.getElementById('fullscreenButton').addEventListener('click', function () {
-  game.scale.startFullscreen();
-});
+            //scaling options?
+            game.scale.on('resize', function (gameSize, baseSize, displaySize, resolution) {
+              if (game.scale.isFullscreen) {
+                game.scale.setGameSize(displaySize.width, displaySize.height);
+              }
+            });
+            
+            game.scale.fullscreenTarget = document.getElementById('gameContainer');
+            
+            document.getElementById('fullscreenButton').addEventListener('click', function () {
+              game.scale.startFullscreen();
+            });
