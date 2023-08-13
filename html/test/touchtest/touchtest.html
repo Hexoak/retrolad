@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phaser Full Screen and Touch Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser/dist/phaser.min.js"></script>
+</head>
+<body>
+    <script>
+        var config = {
+            type: Phaser.AUTO,
+            width: 250,
+            height: 400,
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        var player;
+
+        var swipeZone;
+        var swipeStartX;
+        var swipeStartY;
+
+        function preload() {
+            // Preload assets if needed
+            this.load.image('player', 'anim.gif'); // Load player image
+       
+        }
+
+        function create() {
+            player = this.add.sprite(100,100, 'player');
+            player.setInteractive();
+
+            this.input.addPointer(2); // Enable multi-touch support
+            this.input.on('pointerdown', onPointerDown, this);
+
+            swipeZone = this.add.zone(0, 0, window.innerWidth, window.innerHeight).setOrigin(0).setInteractive();
+            
+            swipeZone.on('pointerdown', function (pointer) {
+                swipeStartX = pointer.x;
+                swipeStartY = pointer.y;
+            }, this);
+
+            swipeZone.on('pointerup', function (pointer) {
+                var swipeEndX = pointer.x;
+                var swipeEndY = pointer.y;
+                var swipeDistanceX = swipeEndX - swipeStartX;
+                var swipeDistanceY = swipeEndY - swipeStartY;
+
+                if (Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY)) {
+                    // Horizontal swipe
+                    if (swipeDistanceX > 0) {
+                        console.log("Swipe right");
+                    } else if (swipeDistanceX < 0) {
+                        console.log("Swipe left");
+                    }
+                } else {
+                    // Vertical swipe
+                    if (swipeDistanceY > 0) {
+                        console.log("Swipe down");
+                    } else if (swipeDistanceY < 0) {
+                        console.log("Swipe up");
+                    }
+                }
+            }, this);
+
+            var fullscreenButton = this.add.text(10, 10, 'Fullscreen', { fill: '#ffffff' });
+            fullscreenButton.setInteractive();
+            fullscreenButton.on('pointerup', function () {
+                if (this.scale.isFullscreen) {
+                    this.scale.stopFullscreen();
+                } else {
+                    this.scale.startFullscreen();
+                }
+            }, this);
+
+        }
+
+        function update(){
+            player.positionX = player.positionX++ ;
+        }
+
+        function onPointerDown(pointer) {
+            console.log('touch', pointer.x, pointer.y);
+            if (player) {
+                var playerX = pointer.x;
+                var playerY = pointer.y;
+                
+                // Move the player to the touch position
+                player.setPosition(playerX, playerY);
+                
+            }
+        }
+    </script>
+</body>
+</html>
