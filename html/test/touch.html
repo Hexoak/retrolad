@@ -77,7 +77,7 @@
                     // Horizontal swipe
                     if (swipeDistanceX > 0) {
                         console.log("Swipe right");
-                        inputText.setText('Swipe right, ' + pointer.x + ', ' + pointer.y);
+                        inputText.setText('Swipe Right, ' + pointer.x + ', ' + pointer.y);
                     } else if (swipeDistanceX < 0) {
                         console.log("Swipe left");
                         inputText.setText('Swipe Left, ' + pointer.x + ', ' + pointer.y);
@@ -106,7 +106,7 @@
 
         //function additionals(){}
         function onPointerDown(pointer) {
-            console.log('touch', pointer.x, pointer.y);
+            console.log('Touch', pointer.x, pointer.y);
             inputText.setText('touch, ' + pointer.x + ', ' + pointer.y);
             if (player) {
                 var playerX = pointer.x;
