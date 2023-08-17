@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Inline Phaser Fullscreen with touch and swipe controls</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser/dist/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        canvas {
+            display: block;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <script>
+        var config = {
+            type: Phaser.AUTO,
+            width: window.innerWidth,
+            height: window.innerHeight,
+            scene: {
+                preload: preload,
+                create: create,
+                update: update,
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        function preload() {
+        // Preload any assets if needed
+            var player;
+
+            var swipeZone;
+            var swipeStartX;
+            var swipeStartY;
+
+            this.load.image('player', 'anim.gif'); // Load player image
+        }
+
+        function create() {
+            // Automatically start in fullscreen
+            this.scale.startFullscreen();
+
+            //add player object to scene
+            player = this.add.sprite(100,100, 'player');
+            player.setInteractive();
+            //player.setGravityY(800);
+
+            //touch and swipe controls
+            this.input.addPointer(2); // Enable multi-touch support
+            this.input.on('pointerdown', onPointerDown, this);
+
+            swipeZone = this.add.zone(0, 0, window.innerWidth, window.innerHeight).setOrigin(0).setInteractive();
+            
+            swipeZone.on('pointerdown', function (pointer) {
+                swipeStartX = pointer.x;
+                swipeStartY = pointer.y;
+            }, this);
+
+            swipeZone.on('pointerup', function (pointer) {
+                var swipeEndX = pointer.x;
+                var swipeEndY = pointer.y;
+                var swipeDistanceX = swipeEndX - swipeStartX;
+                var swipeDistanceY = swipeEndY - swipeStartY;
+
+                if (Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY)) {
+                    // Horizontal swipe
+                    if (swipeDistanceX > 0) {
+                        console.log("Swipe right");
+                        inputText.setText('Swipe right, ' + pointer.x + ', ' + pointer.y);
+                    } else if (swipeDistanceX < 0) {
+                        console.log("Swipe left");
+                        inputText.setText('Swipe Left, ' + pointer.x + ', ' + pointer.y);
+                    }
+                } else {
+                    // Vertical swipe
+                    if (swipeDistanceY > 0) {
+                        console.log("Swipe down");
+                        inputText.setText('Swipe Down, ' + pointer.x + ', ' + pointer.y);
+                    } else if (swipeDistanceY < 0) {
+                        console.log("Swipe up");
+                        inputText.setText('Swipe Up, ' + pointer.x + ', ' + pointer.y);
+                    }
+                }
+            }, this);
+
+            //text
+            inputText = this.add.text(window.innerWidth/2, window.innerHeight/4, '', { fontSize: '32px', fill: '#fff' });
+            inputText.setOrigin(0.5);
+        }//create
+
+
+        function update(){
+            //main scene update logic here
+        }
+
+        //function additionals(){}
+        function onPointerDown(pointer) {
+            console.log('touch', pointer.x, pointer.y);
+            inputText.setText('touch, ' + pointer.x + ', ' + pointer.y);
+            if (player) {
+                var playerX = pointer.x;
+                var playerY = pointer.y;
+                
+                // Move the player to the touch position
+                player.setPosition(playerX, playerY);
+                
+            }
+        }
+        
+    </script>
+</body>
+</html>
