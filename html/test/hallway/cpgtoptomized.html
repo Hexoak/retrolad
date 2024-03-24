@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hallway 1.8</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Define global variables
+        var currentDirection = 'down'; // Initial direction
+        var currentFrame = 0;
+        var numFrame = 4;
+
+        var textureSets = {
+            up: [],
+            down: [],
+            left: [],
+            right: []
+        };
+
+        // Load textures for each direction
+        var textureLoader = new THREE.TextureLoader();
+        for (var i = 0; i < numFrame; i++) {
+            textureSets.up.push(textureLoader.load(`./assets/player/up/player_${i}.gif`));
+            textureSets.down.push(textureLoader.load(`./assets/player/down/player_${i}.gif`));
+            textureSets.left.push(textureLoader.load(`./assets/player/left/player_${i}.gif`));
+            textureSets.right.push(textureLoader.load(`./assets/player/right/player_${i}.gif`));
+        }
+
+        // Create player mesh or sprite
+        var playerGeometry = new THREE.PlaneGeometry(1.5, 1.5);
+        var playerMaterial = new THREE.MeshBasicMaterial({ map: textureSets.down[currentFrame], side: THREE.DoubleSide, transparent: true });
+        var playerObject = new THREE.Mesh(playerGeometry, playerMaterial);
+        playerObject.position.set(0, 0.75, 21);
+        scene.add(playerObject);
+
+        // Function to change player texture based on direction
+        function changePlayerTexture(direction) {
+            playerMaterial.map = textureSets[direction][currentFrame];
+            playerMaterial.needsUpdate = true;
+        }
+
+        // Function to handle input control
+        function inputControl() {
+            const moveSpeed = 0.025;
+            if (moveForward) {
+                playerObject.position.z -= moveSpeed + 0.02;
+                currentDirection = 'up';
+            }
+            if (moveBackward) {
+                playerObject.position.z += moveSpeed;
+                currentDirection = 'down';
+            }
+            if (moveLeft) {
+                playerObject.position.x -= moveSpeed;
+                currentDirection = 'left';
+            }
+            if (moveRight) {
+                playerObject.position.x += moveSpeed;
+                currentDirection = 'right';
+            }
+        }
+
+        // Function to handle player animation
+        function playerAnim() {
+            const animationTime = Date.now() * 0.00855;
+            const frameIndex = Math.floor(animationTime % numFrame);
+            currentFrame = frameIndex; // Update currentFrame
+
+            // Determine the correct texture set based on the player's current direction
+            let currentTextureSet;
+            switch (currentDirection) {
+                case 'up':
+                    currentTextureSet = textureSets.up;
+                    break;
+                case 'down':
+                    currentTextureSet = textureSets.down;
+                    break;
+                case 'left':
+                    currentTextureSet = textureSets.left;
+                    break;
+                case 'right':
+                    currentTextureSet = textureSets.right;
+                    break;
+                default:
+                    currentTextureSet = textureSets.down; // Default to 'down' if direction is unknown
+            }
+
+            // Update the player material map with the texture from the current frame index of the selected texture set
+            playerMaterial.map = currentTextureSet[currentFrame];
+            playerMaterial.needsUpdate = true;
+        }
+
+        // Function to control camera sway
+        function camControl() {
+            var time = performance.now() * 0.001;
+            var swayX = Math.sin(time * swaySpeed) * swayAmount;
+            var swayY = Math.cos(time * swaySpeed * 0.5) * swayAmount * 0.55;
+            var swayZ = Math.sin(time * swaySpeed * 0.5) * swayAmount * 0.65;
+
+            var swayOffset = new THREE.Vector3(swayX, swayY, swayZ);
+            camera.position.copy(playerObject.position).add(cameraOffset).add(swayOffset);
+
+            camera.lookAt(playerObject.position);
+        }
+
+        // Event listeners for key presses
+        document.addEventListener('keydown', function(event) {
+            switch (event.key) {
+                case "ArrowUp":
+                    moveBackward = true;
+                    break;
+                case "ArrowDown":
+                    moveForward = true;
+                    break;
+                case "ArrowLeft":
+                    moveRight = true;
+                    break;
+                case "ArrowRight":
+                    moveLeft = true;
+                    break;
+            }
+        });
+
+        document.addEventListener('keyup', function(event) {
+            switch (event.key) {
+                case "ArrowUp":
+                    moveBackward = false;
+                    break;
+                case "ArrowDown":
+                    moveForward = false;
+                    break;
+                case "ArrowLeft":
+                    moveRight = false;
+                    break;
+                case "ArrowRight":
+                    moveLeft = false;
+                    break;
+            }
+        });
+
+        // Set camera position and add swaying effect
+        var cameraOffset = new THREE.Vector3(0, 1, -3);
+        var swayAmount = 0.25;
+        var swaySpeed = 0.5;
+
+        // Lights flicker
+        let flickerTimer = 0;
+        const flickerInterval = 6;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            inputControl();
+            camControl();
+            playerAnim();
+
+            // Lights flicker
+            flickerTimer++;
+            if (flickerTimer % flickerInterval === 0) {
+                spotlight1.intensity = Math.floor(Math.random() * (1.5 - 0.5 + 1)) + 0.65;
+                spotlight3.intensity = Math.floor(Math.random() * (1.5 - 0.5 + 1)) + 0.5;
+                spotlight6.intensity = Math.floor(Math.random() * (1.5 - 0.5 + 1)) + 0.75;
+            }
+
+            // Render the scene
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

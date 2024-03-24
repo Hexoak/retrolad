@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HallwayTest 1.0</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script>
+	
+    //Scene Initialization
+		// Create scene
+        const scene = new THREE.Scene();
+
+        // Create camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 5, 10);
+
+        // Create renderer
+        const renderer = new THREE.WebGLRenderer();
+        //renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.setSize(600,300);
+        document.body.appendChild(renderer.domElement);
+
+		// Set a near white clear color (default is black)
+		//renderer.setClearColor( 0xfff6e6 );
+
+		// Load textures
+		//const textures = [];
+        const textureLoader = new THREE.TextureLoader();
+		
+	//Create "Hallway"
+		//Apply image as texture to ground plane
+			const groundtexture = textureLoader.load('./assets/ground.gif');
+        	const groundPlane = new THREE.PlaneGeometry(5, 50, 50, 25);
+
+			const groundMaterial = new THREE.MeshPhongMaterial({ wireframe: false, map: groundtexture, side: THREE.DoubleSide  });////map: groundtexture,
+			groundtexture.wrapS = THREE.RepeatWrapping; // Repeat the texture in the horizontal direction
+			groundtexture.wrapT = THREE.RepeatWrapping; // Repeat the texture in the vertical direction
+			groundtexture.repeat.set(8, 100); // Repeat the texture both horizontally and vertically
+
+			const ground = new THREE.Mesh(groundPlane, groundMaterial);
+			ground.rotation.x = - Math.PI / 2;
+			ground.position.y = 0; // Adjust position to place the ground below the cube
+			ground.castShadow = true
+			//ground.receiveShadow = true; // Ground receives shadows
+			scene.add(ground);
+
+		//Apply image as texture to ceiling plane
+			const ceilingtexture = textureLoader.load('./assets/ceiling.gif');
+			const ceilingPlane = new THREE.PlaneGeometry(5, 50, 50, 25);
+
+			const ceilingMaterial = new THREE.MeshPhongMaterial({ wireframe: false, map: ceilingtexture, side: THREE.DoubleSide  });////map: ceilingMaterial,
+			ceilingtexture.wrapS = THREE.RepeatWrapping; // Repeat the texture in the horizontal direction
+			ceilingtexture.wrapT = THREE.RepeatWrapping; // Repeat the texture in the vertical direction
+			ceilingtexture.repeat.set(1, 25); // Repeat the texture both horizontally and vertically
+
+			const ceiling = new THREE.Mesh(ceilingPlane, ceilingMaterial);
+			ceiling.rotation.x = - Math.PI / 2;
+			//ceiling.position.y = 0; // Adjust position to place the ceiling below the cube
+			ceiling.castShadow = true
+			ceiling.position.y = 4;
+			scene.add(ceiling);
+		  
+		//Apply image as texture to left Wall plane
+			const LWalltexture = textureLoader.load('./assets/wall.gif');
+			const LWallPlane = new THREE.PlaneGeometry(5, 50, 50, 25);
+
+			const LWallMaterial = new THREE.MeshPhongMaterial({ wireframe: false, map: LWalltexture, side: THREE.DoubleSide  });////map: ceilingMaterial,
+			LWalltexture.wrapS = THREE.RepeatWrapping; // Repeat the texture in the horizontal direction
+			LWalltexture.wrapT = THREE.RepeatWrapping; // Repeat the texture in the vertical direction
+			LWalltexture.repeat.set(1, 25); // Repeat the texture both horizontally and vertically
+
+			const LWall = new THREE.Mesh(LWallPlane, LWallMaterial);
+			LWall.rotation.x = - Math.PI / 2;
+			LWall.rotation.y = - Math.PI / 2;
+			//RWall.position.y = 0; // Adjust position to place the RWall below the cube
+			LWall.castShadow = true
+			LWall.position.x = -2.5;
+		  	LWall.position.y = 2;
+			//RWall.receiveShadow = true; // RWall receives shadows
+			scene.add(LWall);
+		
+		//Apply image as texture to LWall plane
+			const RWalltexture = textureLoader.load('./assets/wall.gif');
+			const RWallPlane = new THREE.PlaneGeometry(5, 50, 50, 25);
+
+			const RWallMaterial = new THREE.MeshPhongMaterial({ wireframe: false, map: RWalltexture, side: THREE.DoubleSide  });////map: RWallMaterial,
+			RWalltexture.wrapS = THREE.RepeatWrapping; // Repeat the texture in the horizontal direction
+			RWalltexture.wrapT = THREE.RepeatWrapping; // Repeat the texture in the vertical direction
+			RWalltexture.repeat.set(1, 25); // Repeat the texture both horizontally and vertically
+
+			const RWall = new THREE.Mesh(RWallPlane, RWallMaterial);
+			RWall.rotation.x = - Math.PI / 2;
+			RWall.rotation.y = - Math.PI / 2;
+			//LWall.position.y = 0; // Adjust position to place the LWall below the cube
+			RWall.castShadow = true
+			RWall.position.x = 2.5;
+		  	RWall.position.y = 2;
+			//LWall.receiveShadow = true; // LWall receives shadows
+			//LWall.position.y = 3;
+			scene.add(RWall);
+		  
+	//Add "playerCube"
+		var cubeSize = 1;
+		var cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+		var cubeMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+		var playerCube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+			playerCube.position.set(0, cubeSize / 2, -21); // Place it above the ground plane
+			scene.add(playerCube);
+			
+	//Input control for playerCube
+		var movementSpeed = 0.01;
+		// Track the keys being pressed
+		var keys = {};
+		
+		// Event listener for key presses
+		document.addEventListener('keydown', function(event) {
+			keys[event.keyCode] = true;
+		});
+		document.addEventListener('keyup', function(event) {
+			delete keys[event.keyCode];
+		});
+		function updateMovement() {
+			if (keys[37]) { // Left arrow key
+				moveCube(-movementSpeed, 0, 0);
+			}
+			if (keys[38]) { // Up arrow key
+				moveCube(0, 0, -movementSpeed);
+			}
+			if (keys[39]) { // Right arrow key
+				moveCube(movementSpeed, 0, 0);
+			}
+			if (keys[40]) { // Down arrow key
+				moveCube(0, 0, movementSpeed);
+			}
+		}
+		
+		// Function to move the cube
+		function moveCube(deltaX, deltaY, deltaZ) {
+			// Update cube position
+			playerCube.position.x += deltaX;
+			playerCube.position.y += deltaY;
+			playerCube.position.z += deltaZ;
+		}
+
+	//Lighting
+        // Add ambient light
+        const ambientLight = new THREE.AmbientLight(0xffffff, .3);
+        scene.add(ambientLight);
+
+        // Add directional light
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+	//More Controls
+		const controls = new THREE.OrbitControls(camera, renderer.domElement);
+			//initial camera positions
+		camera.position.x = 0;
+		camera.position.y = 1.5;
+		camera.position.z = -18;
+		
+		// Add axes helper
+        const axesHelper = new THREE.AxesHelper(5);
+        scene.add(axesHelper);
+		
+	// Set up a function to update camera position based on cube position
+		function updateCameraPosition() {
+			// Adjust camera position to follow the cube
+			camera.position.copy(playerCube.position.clone().add(new THREE.Vector3(0, 1, 2))); // Offset camera position from cube position
+			//camera.lookAt(playerCube.position); // Make the camera look at the cube
+}
+
+    // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+			
+		//cameraMove - proto motions
+			updateCameraPosition();
+			//camera.position.z += .01;
+			playerCube.position.z += .01;
+			
+		// Update cube movement
+			updateMovement();
+			
+			//console.log (camera.position.x, camera.position.y, camera.position.z);
+        }
+        //controls.update();
+
+        animate();
+		
+    </script>
+</body>
+</html>

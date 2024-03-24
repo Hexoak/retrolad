@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HallwayTest 1.0</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script>
+	
+    //Scene Initialization
+		// Create scene
+        const scene = new THREE.Scene();
+
+        // Create camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        
+
+        // Create renderer
+        const renderer = new THREE.WebGLRenderer();
+        //renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.setSize(600,300);
+        document.body.appendChild(renderer.domElement);
+
+		// Set a near white clear color (default is black)
+		renderer.setClearColor( 0xfff6e6 );
+		
+	//Create "Hallway"
+		// Create ground plane
+		var groundPlane = new THREE.Mesh(
+			new THREE.PlaneGeometry( 5, 50, 5, 50 ),
+			new THREE.MeshBasicMaterial( { color: 0x393839, wireframe: true } )
+		  );
+		  groundPlane.rotateX(Math.PI/2);
+		  scene.add( groundPlane );
+		  
+		// Create ceiling
+		 var ceilingPlane = new THREE.Mesh(
+			new THREE.PlaneGeometry( 5, 50, 5, 50 ),
+			new THREE.MeshBasicMaterial( { color: 0x393839, wireframe: true } )
+		  );
+		  ceilingPlane.rotateX(Math.PI/2);
+		  ceilingPlane.position.y = 3;
+		  scene.add( ceilingPlane );
+		  
+		// Create leftWall
+		 var leftPlane = new THREE.Mesh(
+			new THREE.PlaneGeometry( 3, 50, 2, 5 ),
+			new THREE.MeshBasicMaterial( { color: 0x393839, wireframe: true } )
+		  );
+		  leftPlane.rotateX(Math.PI/2);
+		  leftPlane.rotateY(Math.PI/2);
+		  leftPlane.position.x = -2.5;
+		  leftPlane.position.y = 1.5;
+		  scene.add( leftPlane );
+		  
+		// Create rightWall
+		  var rightPlane = new THREE.Mesh(
+			new THREE.PlaneGeometry( 3, 50, 2, 5 ),
+			new THREE.MeshBasicMaterial( { color: 0x393839, wireframe: true } )
+		  );
+		  rightPlane.rotateX(Math.PI/2);
+		  rightPlane.rotateY(Math.PI/2);
+		  rightPlane.position.x = 2.5;
+		  rightPlane.position.y = 1.5;
+		  scene.add( rightPlane );
+		  
+	//Add "playerCube"
+		var cubeSize = 1;
+		var cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+		var cubeMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+		var playerCube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+			playerCube.position.set(0, cubeSize / 2, -21); // Place it above the ground plane
+			scene.add(playerCube);
+			
+
+			
+	//Input control for playerCube
+		var movementSpeed = 0.01;
+		// Track the keys being pressed
+		var keys = {};
+		
+		// Event listener for key presses
+		document.addEventListener('keydown', function(event) {
+			keys[event.keyCode] = true;
+		});
+		document.addEventListener('keyup', function(event) {
+			delete keys[event.keyCode];
+		});
+		function updateMovement() {
+			if (keys[37]) { // Left arrow key
+				moveCube(-movementSpeed, 0, 0);
+			}
+			if (keys[38]) { // Up arrow key
+				moveCube(0, 0, -movementSpeed);
+			}
+			if (keys[39]) { // Right arrow key
+				moveCube(movementSpeed, 0, 0);
+			}
+			if (keys[40]) { // Down arrow key
+				moveCube(0, 0, movementSpeed);
+			}
+		}
+		
+		// Function to move the cube
+		function moveCube(deltaX, deltaY, deltaZ) {
+			// Update cube position
+			playerCube.position.x += deltaX;
+			playerCube.position.y += deltaY;
+			playerCube.position.z += deltaZ;
+		}
+		
+
+	//Lighting
+        // Add ambient light
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        // Add directional light
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+	//More Controls
+		const controls = new THREE.OrbitControls(camera, renderer.domElement);
+			//initial camera positions
+		camera.position.set(playerCube.position.x +0, playerCube.position.y+1.5, playerCube.position.z+2);
+		//camera.position.x = 0;
+		//camera.position.y = 1.5;
+		//camera.position.z = -18;
+		
+		// Add axes helper
+        const axesHelper = new THREE.AxesHelper(5);
+        scene.add(axesHelper);
+		
+//**//  Set up a function to update camera position based on cube position
+		function updateCameraPosition() {
+			// Adjust camera position to follow the cube
+				//camera.position.copy(playerCube.position.clone().add(new THREE.Vector3(0, 1, 2))); // Offset camera position from cube position
+			camera.lookAt(playerCube.position); // Make the camera look at the cube
+		}
+		  // Set up animation variables
+		  let targetPosition = new THREE.Vector3(playerCube.position.x-.57, playerCube.position.y +.54, playerCube.position.z + 2.2);
+		  let initialPosition = new THREE.Vector3(playerCube.position.x+.25, playerCube.position.y+.28,playerCube.position.z+ 2.4)
+		  let reverse = false;
+		  let startTime = Date.now(); // Record the start time
+		  //Animation Speed - Higher# = Slower
+		  animSpeed = 100;
+		 
+//**//		 
+		function cameraPan(t){
+		          if (!reverse) {
+              camera.position.lerp(targetPosition, t / animSpeed);
+          } else {
+              camera.position.lerp(initialPosition, t / animSpeed);
+          }
+
+          // If timer (t) is 99%; reverse
+          if (t > 0.99) {
+              reverse = !reverse;
+              startTime = Date.now(); // Reset the start time for the next half of the animation
+          }   
+		}
+	
+
+    // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+								
+		//cameraMove - proto motions
+			updateCameraPosition();
+			//camera.position.z += .01;
+			//playerCube.position.z += .01;
+//**//
+			// Calculate elapsed time and duration for each half of the animation
+          let elapsed = Date.now() - startTime;
+          let duration = 11000; // Adjust this value as needed
+          // Calculate the interpolation factor based on elapsed time and duration
+          let t = (elapsed % duration) / duration;
+          cameraPan(t);
+			
+		// Update cube movement
+			updateMovement();
+			
+			//console.log (camera.position.x, camera.position.y, camera.position.z);
+        }
+        //controls.update();
+
+        animate();
+		
+    </script>
+</body>
+</html>
