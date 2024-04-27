@@ -5,13 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Three.js Website</title>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden; /* Prevent scrollbars */
-        }
-        canvas {
-            display: block; /* Full-screen canvas */
-        }
+		@font-face {
+		font-family: 'YourFontName';
+		src: url('./assets/font/GamegirlClassic-9MVj.ttf') format('truetype');
+		}
+		body {
+		  margin: 0;
+			overflow: hidden;
+			position: relative;
+			padding: 32px;
+		  }
+		  #overlay {
+			font-family: 'YourFontName';
+			position: absolute;
+			top: 0;
+			left: 0;
+			color: rgb(255, 255, 255); 
+			font-size: 24px;
+			padding: 38px;
+	
+		  }
     </style>
 </head>
 <body>
@@ -51,6 +64,11 @@
         animate();
     };
 </script>
-
+    <div id="overlay">Retrolad.com<br><br>
+        <br><br>
+        <a href="https://www.w3schools.com">ABOUT</a><br><br>
+        <a href="https://www.w3schools.com">ART</a><br><br>
+        <a href="https://www.w3schools.com">TOOLS</a><br><br>
+    </div>
 </body>
 </html>
