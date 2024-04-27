@@ -318,14 +318,14 @@ scene.add(ambientLight);
                    var time = performance.now() * 0.001; // Get time for oscillation
                    var swayX = Math.sin(time * swaySpeed) * swayAmount; // Calculate sway in x-axis
                    var swayY = Math.cos(time * swaySpeed * 0.5) * swayAmount * 0.25; // Calculate sway in y-axis
-                   var swayZ = Math.sin(time * swaySpeed * 0.75) * swayAmount * 0.25; // Calculate sway in z-axis
+                   var swayZ = Math.sin(time * swaySpeed * 0.75) * swayAmount * 0.75; // Calculate sway in z-axis
        
                    // Apply sway to camera offset
                    var swayOffset = new THREE.Vector3(swayX, swayY, swayZ);
                    camera.position.copy(sword.position).add(cameraOffset).add(swayOffset);
        
                    // Make the camera look at the playerObject
-                   camera.lookAt(0,0,0);
+                   camera.lookAt(0,.5,0);
 
         //DEBUG
             //console.log(camera.position.x, camera.position.y, camera.position.z);
