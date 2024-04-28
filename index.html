@@ -2,90 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>retrolad.com - pixel art and resources</title>
-    <link rel="stylesheet" href="style.css">
-    
+    <title>Three.js Website</title>
+    <style>
+		@font-face {
+		font-family: 'YourFontName';
+		src: url('./assets/font/GamegirlClassic-9MVj.ttf') format('truetype');
+		}
+		body {
+		  margin: 0;
+			overflow: hidden;
+			position: relative;
+			padding: 0px;
+		  }
+		  #overlay {
+			font-family: 'YourFontName';
+			position: absolute;
+			top: 0;
+			left: 0;
+			color: rgb(196, 207, 161); 
+			font-size: 24px;
+			padding: 16px;
+            a:link {
+
+            color:  rgb(196, 207, 161);
+            background-color: transparent;
+            text-decoration: none;
+            }
+
+            a:visited {
+            color: rgb(196, 207, 161);
+            background-color: transparent;
+            text-decoration: none;
+            }
+
+            a:hover {
+            color:  rgb(196, 207, 161);
+            background-color: transparent;
+            text-decoration: none;
+            }
+
+            a:active {
+            color:  rgb(196, 207, 161);
+            background-color: transparent;
+            text-decoration: none;
+            }
+        #threejs-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1; 
+        }
+
+        #threejs-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgb(0, 0, 0) 100%, transparent 20%, transparent 40%, rgb(0, 0, 0) 100%);
+            pointer-events: none; /* Ensure interactions with the canvas below are not blocked */
+            z-index: 2; 
+        }
+		  }
+    </style>
 </head>
-
 <body>
-    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!-- Top Navigation Menu -->
-    
-    <div class="topnav">
-        <a href="http://retrolad.com/"><img src="./src/8bit_retrolad.gif"></a>
-    
-  <!-- Navigation links (hidden by default) -->
-  <div id="myLinks">
-    <a href="./html/devlog/devlog.html">DEVLOG</a>
-    <a href="./html/art/art.html">ART</a>
-    <a href="./html/games/phaser.html">GAMES</a>
-    <a href="./html/media/media.html">MEDIA</a>
-    <a href="./html/tools/tools.html">TOOLS</a>
-    <a href="./html/contact/contact.html" class="right">CONTACT</a>
-  </div>
-  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
-  <a href="javascript:void(0);" class="icon" onclick="menuMobile()">
-    <i class="fa fa-bars"></i>
-  </a>
-</div>
-    <h1>
+<!-- Container for Three.js scene -->
+<div id="threejs-container"></div>
 
-    </h1>
+<!-- Include Three.js library -->
 
-      <div id="h1">
-          <br>
-        <img src="./html/art/src/heroRests.gif">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="main.js" type="module"></script>
 
-<br><br>
-        <body2>
-        <img src="./src/avatar2.gif" alt="" width="128" height="256";>
-        <br>
-            <p>My name is AJ and I am a part-time Pixel artist and hobbiest Programmer<br><br>
-              I aspire to create art, music and games for personal use, knowledge, and entertainment.<br><br>
-              This website's function is to catalog my accumulated skills and to be a resource to others.<br>
-              <br>
-              The majority of the tools I utilize and reccommend are free to obtain and use- <br>as I believe that creativity should be freely available to everyone.
-              <br>
-              <br>
-              </p>
-            </body2>
+    <div id="overlay">Retrolad.com<br><br>
+        <br><br><br><br><br><br>
+        <a href="./html/about.html">ABOUT</a><br><br>
+        <a href="./html/art.html">ART</a><br><br>
+        <a href="./html/tools.html">TOOLS</a><br><br>
     </div>
-
-    <script>
-        window.onscroll = function() {navSticky()};
-        
-        var navbar = document.getElementById("topnav");
-        var sticky = navbar.offsetTop;
-        
-        function navSticky() {
-          if (window.pageYOffset >= sticky) {
-            navbar.classList.add("sticky")
-          } else {
-            navbar.classList.remove("sticky");
-          }
-        }
-
-        /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
-        function menuMobile() {
-        var x = document.getElementById("myLinks");
-        if (x.style.display === "block") {
-        x.style.display = "none";
-           } else {
-        x.style.display = "block";
-        }
-        }
-
-        
-        </script>
-
-<div>
-
-</body>
-</html>
-
 </body>
 </html>
