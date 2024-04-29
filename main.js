@@ -304,7 +304,7 @@ scene.add(ambientLight);
       //const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
        // Set camera position and add swaying effect
-       var cameraOffset = new THREE.Vector3(-.02, 2, 3); // Offset of the camera from the playerObject
+       var cameraOffset = new THREE.Vector3(-.02, .25, 2); // Offset of the camera from the playerObject
        var swayAmount = 0.25; // Amount of sway
        var swaySpeed = 0.25; // Speed of sway
 
