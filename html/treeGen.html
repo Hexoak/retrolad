@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retrolad.com - Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    
+</head>
+
+<body>
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Top Navigation Menu -->
+    
+    <div class="topnav">
+        <a href="http://retrolad.com/"><img src="../assets/8bit_retrolad.gif"></a>
+    
+  <!-- Navigation links (hidden by default) -->
+  <div id="myLinks">
+    <a href="../html/about.html">ABOUT</a>
+    <a href="../html/art.html">ART</a>
+    <a href="../html/tools.html">TOOLS</a>
+    <a href="../html/three.html">THREEJS</a>
+  </div>
+  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+  <a href="javascript:void(0);" class="icon" onclick="menuMobile()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+<h1>
+  8x16 Tree Generator <br>
+  <button type="button" id="drawArray()" onclick="drawArray()" >Generate New Tree</button>
+  <button type="button" id="saveAs()" onclick="saveAs()" >Download</button><br>
+  <h3>
+    <!--<label for="pxSize">Pixel Size:</label><input type="text" value=2 id="pxSize" name="pxSize"><br> -->
+    Generates a random tree form x8 scale
+  </h3>
+
+</h1>
+
+</head>
+<body>
+  <canvas id="arrayCanvas" width="64" height="128"style="border:1px solid #000000;"></canvas>
+
+  <script>
+    // Hardcoded array for demonstration (you can replace it with your own array)
+    const treeArray = [
+    [0,0,0,1,0,0,0,0],  //0  
+    [0,0,0,0,1,0,0,0],  //1
+    [0,0,0,0,1,1,0,0],  //2
+    [0,0,1,1,0,0,0,0],  //3
+    [0,0,0,1,1,0,0,0],  //4
+    [0,0,0,1,1,1,0,0],  //5
+    [0,0,0,1,1,1,1,0],  //6
+    [0,0,1,1,1,0,0,0],  //7
+    [0,0,1,1,1,1,0,0],  //8
+    [0,0,1,1,1,1,1,0],  //9
+    [0,1,1,1,1,0,0,0],  //10
+    [0,1,1,1,1,1,0,0],  //11
+    [0,1,1,1,1,1,1,0],  //12
+    [0,0,0,1,1,1,1,1],  //13
+    [0,0,1,1,1,1,1,1],  //14
+    [0,1,1,1,1,1,1,1],  //15
+    [1,1,1,1,1,0,0,0],  //16
+    [1,1,1,1,1,1,0,0],  //17
+    [1,1,1,1,1,1,1,0],  //18
+    [1,1,1,1,1,1,1,1],  //19
+
+    ];
+
+//return a random number between 0 and 255
+    function getRandomNumber() {
+        return Math.floor(Math.random() * 19);
+      }
+      const randomNumber = getRandomNumber();
+
+// Get the canvas element and its context
+        const canvas = document.getElementById('arrayCanvas');
+        const ctx = canvas.getContext('2d');
+
+function saveAs(){
+  console.log('saved..')
+      // Get the data URL of the canvas
+      const dataURL = canvas.toDataURL('image/png');
+
+    // Create a link element and set its attributes
+    const downloadLink = document.createElement('a');
+    downloadLink.href = dataURL;
+    downloadLink.download = 'pixel.tree.png';
+
+    // Append the link to the document and trigger a click event
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+
+    // Remove the link from the document
+    document.body.removeChild(downloadLink);
+}
+
+//size of the pixels
+var cellSize = 8
+
+// Function to draw the array on the canvas
+    function drawArray() {
+      displayArray = [];
+      for (let q = 0; q<16; q++){
+
+        if (q <= 2){
+          for (let t1=0; t1<16; t1++){
+              rndTip = Math.floor(Math.random()*(1-0+1)+0)
+            }
+          displayArray.push(treeArray[rndTip]);
+        }
+
+        if (q >= 2 && q <= 6){
+          for (let t1=0; t1<16; t1++){
+              rndTip2 = Math.floor(Math.random()*(9-3+1)+3)
+            }
+          displayArray.push(treeArray[rndTip2]);
+        }
+
+        if (q >= 6 && q <= 9){
+          for (let t1=0; t1<16; t1++){
+              rndTip3 = Math.floor(Math.random()*(15-8+1)+8)
+            }
+          displayArray.push(treeArray[rndTip3]);
+        }
+
+        if (q >= 9 && q <= 14){
+          for (let t1=0; t1<16; t1++){
+              rndTip4 = Math.floor(Math.random()*(19-9+1)+9)
+            }
+          displayArray.push(treeArray[rndTip4]);
+        }
+
+        if (q === 16){
+          displayArray.push(treeArray[4]);
+        }
+      }
+
+
+             
+
+
+//// Set values according to conditions
+// for (let i = 0; i < 8; i++) {
+//   for (let j = 0; j < 8; j++) {
+//     // Set 1 in the first and last columns
+//     if (j === 0 || j === 7) {
+//       array[i][j] = 1;
+//     } else {
+//       // Set 1 in the bottom row
+//       array[7][j] = 1;
+//       // Set 0 in other positions
+//       array[i][j] = 0;
+//     }
+//   }
+//// }
+
+//color the array
+      for (let i = 0; i < displayArray.length; i++) {
+        for (let j = 0; j < displayArray[i].length; j++) {
+          const color = displayArray[i][j] === 0 ? 'white' : 'black';
+          ctx.fillStyle = color;
+          ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+        
+        }
+      }
+    }
+
+// Call the drawArray function to display the array on the canvas
+    drawArray();
+  </script>
+
+    <script>
+        window.onscroll = function() {navSticky()};
+        
+        var navbar = document.getElementById("topnav");
+        var sticky = navbar.offsetTop;
+        
+        function navSticky() {
+          if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+          } else {
+            navbar.classList.remove("sticky");
+          }
+        }
+
+        /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+        function menuMobile() {
+        var x = document.getElementById("myLinks");
+        if (x.style.display === "block") {
+        x.style.display = "none";
+           } else {
+        x.style.display = "block";
+        }
+        }
+
+        
+        </script>
+
+<div>
+
+</body>
+</html>
+
+</body>
+</html>

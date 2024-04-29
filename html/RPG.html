@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retrolad.com - Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    
+</head>
+
+<body>
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Top Navigation Menu -->
+    
+    <div class="topnav">
+        <a href="http://retrolad.com/"><img src="../assets/8bit_retrolad.gif"></a>
+    
+  <!-- Navigation links (hidden by default) -->
+  <div id="myLinks">
+    <a href="../html/about.html">ABOUT</a>
+    <a href="../html/art.html">ART</a>
+    <a href="../html/tools.html">TOOLS</a>
+    <a href="../html/three.html">THREEJS</a>
+  </div>
+  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+  <a href="javascript:void(0);" class="icon" onclick="menuMobile()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+<h1>
+        Random Pattern Generator <br>
+      <button type="button" id="increaseComplexity()" onclick="increaseComplexity()">Increase Complexity</button>
+        <button type="button" id="decreaseComplexity()" onclick="decreaseComplexity()" >Decrease Complexity</button>
+        <br>
+        <button type="button" id="new1bit()" onclick="new1Bit()" >Generate New 1-Bit</button>
+               <button type="button" id="new2bit()" onclick="new2Bit()" >Generate New 2-Bit</button>
+        <button type="button" id="generateNewRandomPattern()" onclick="generatenNewRandomPattern()">Generate New 4-bit</button><br>
+        <button type="button" id="woodGrain()" onclick="woodGrain()">Wood Grain</button>
+        <button type="button" id="partyMode()" onclick="partyMode()">Party Mode</button><br>
+
+  
+    </h1>
+
+</head>
+<body>
+    <!--<canvas id="canvas" width="512" height="512"> -->
+    <canvas id="canvas" width="256" height="256"></canvas>
+        <script>
+
+//Access the canvas
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+//console.log('canvas init')
+//Initiate complexity of pattern
+var sqrSize =1;
+//Generate new pattern on page load
+generatenNewRandomPattern();
+
+//Increase complexity of the pattern button
+function increaseComplexity(){
+    if (sqrSize>1) {
+        //decreases square
+        sqrSize=sqrSize/2;
+        generatenNewRandomPattern();
+    }
+}
+
+//Decrease complexity button
+function decreaseComplexity(){
+    if (sqrSize<canvas.width){
+        //increases size
+        sqrSize=sqrSize*2;
+        generatenNewRandomPattern();
+    }
+}
+
+function new1Bit(){
+    var width = canvas.width;
+    var height = canvas.height;
+
+    for(var i=0; i<width/sqrSize; i++)
+    {
+    for(var j=0; j<height/sqrSize; j++)
+    {
+        var value = Math.floor(Math.random()*2)+1;
+        //console.log (value);
+
+    if(value ===1)
+    {ctx.fillStyle='#000000';}
+    
+    if(value ===2)
+    {ctx.fillStyle='#FFFFFF';}
+
+    
+    ctx.fillRect(i*sqrSize, j*sqrSize, sqrSize, sqrSize);
+
+    }    
+    }
+}
+
+function new2Bit(){
+    var width = canvas.width;
+    var height = canvas.height;
+
+    for(var i=0; i<width/sqrSize; i++)
+    {
+    for(var j=0; j<height/sqrSize; j++)
+    {
+        var value = Math.floor(Math.random()*4)+1;
+        //console.log (value);
+
+    if(value ===1)
+    {ctx.fillStyle='#000000';}
+    
+    if(value ===2)
+    {ctx.fillStyle='#303030';}
+
+    if(value ===3)
+    {ctx.fillStyle='#606060';}
+
+    if(value ===4)
+    {ctx.fillStyle='#969696';}
+    
+    ctx.fillRect(i*sqrSize, j*sqrSize, sqrSize, sqrSize);
+
+    }    
+    }
+}
+
+
+//This is the function that generates a pattern
+function generatenNewRandomPattern(){
+    //console.log("square size: "+sqrSize)//error checking
+
+    var width = canvas.width;
+    var height = canvas.height;
+
+    for(var i=0; i<width/sqrSize; i++)
+    {
+    for(var j=0; j<height/sqrSize; j++)
+    {
+        var value = Math.floor(Math.random()*16);
+        //console.log (value);
+
+    if(value ===1)
+    {ctx.fillStyle='#000000';}
+    
+    if(value ===2)
+    {ctx.fillStyle='#181818';}
+
+    if(value ===3)
+    {ctx.fillStyle='#282828';}
+
+    if(value ===4)
+    {ctx.fillStyle='#383838';}
+
+    if(value ===5)
+    {ctx.fillStyle='#474747';}
+
+    if(value ===6)
+    {ctx.fillStyle='#565656';}
+
+    if(value ===7)
+    {ctx.fillStyle='#646464';}
+
+    if(value ===8)
+    {ctx.fillStyle='#717171';}
+
+    if(value ===9)
+    {ctx.fillStyle='#7e7e7e';}
+
+    if(value ===10)
+    {ctx.fillStyle='#8c8c8c';}
+    
+    if(value ===11)
+    {ctx.fillStyle='#9b9b9b';}
+
+    if(value ===12)
+    {ctx.fillStyle='#ababab';}
+
+    if(value ===13)
+    {ctx.fillStyle='#bdbdbd';}
+
+    if(value ===14)
+    {ctx.fillStyle='#d1d1d1';}
+
+    if(value ===15)
+    {ctx.fillStyle='#e7e7e7';}
+
+    if(value ===16)
+    {ctx.fillStyle='#ffffff';}
+    
+    ctx.fillRect(i*sqrSize, j*sqrSize, sqrSize, sqrSize);
+    }
+    }  
+}  
+    
+
+    //This is the function that generates a pattern
+function woodGrain(){
+    //console.log("square size: "+sqrSize)//error checking
+
+    var width = canvas.width;
+    var height = canvas.height;
+
+    for(var i=0; i<width/sqrSize; i++)
+    {
+    for(var j=0; j<height/sqrSize; j++)
+    {
+        var value = Math.floor(Math.random()*20);
+        //console.log (value);
+
+    if(value ===1)
+    {ctx.fillStyle='#000000';}
+    
+    if(value ===2)
+    {ctx.fillStyle='#663300';}
+
+    if(value ===3)
+    {ctx.fillStyle='#291807';}
+    
+    ctx.fillRect(i*sqrSize, j*sqrSize, sqrSize, sqrSize);
+
+    }
+    }
+    }
+
+    function getRandomColor() {
+          this.letters = "123456789ABCDEF";
+          this.color = "#";
+          for (var i = 0; i < 6; i++) {
+          this.color += this.letters[Math.floor(Math.random() * 16)];
+          }
+          return this.color;
+        }
+
+    function partyMode(){
+        var width = canvas.width;
+        var height = canvas.height;
+
+        for(var i=0; i<width/sqrSize; i++)
+            {
+        for(var j=0; j<height/sqrSize; j++)
+            {
+                var value = getRandomColor(); 
+                {ctx.fillStyle=color;}  
+                //console.log(value);
+                ctx.fillRect(i*sqrSize, j*sqrSize, sqrSize, sqrSize);
+
+        }  
+        }
+        }
+		</script>
+        <p>
+            <br>
+            This code was lifted from a video which was stumbled upoon that was 
+            for an extra credit assignment on a college level programming course.<br>
+            The video did not specifically detail the code, so I was able to reverse
+            engineer it and added some additional perameters.
+        </p>
+
+    <script>
+        window.onscroll = function() {navSticky()};
+        
+        var navbar = document.getElementById("topnav");
+        var sticky = navbar.offsetTop;
+        
+        function navSticky() {
+          if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+          } else {
+            navbar.classList.remove("sticky");
+          }
+        }
+
+        /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+        function menuMobile() {
+        var x = document.getElementById("myLinks");
+        if (x.style.display === "block") {
+        x.style.display = "none";
+           } else {
+        x.style.display = "block";
+        }
+        }
+
+        
+        </script>
+
+<div>
+
+</body>
+</html>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retrolad.com - Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    
+</head>
+
+<body>
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Top Navigation Menu -->
+    
+    <div class="topnav">
+        <a href="http://retrolad.com/"><img src="../assets/8bit_retrolad.gif"></a>
+    
+  <!-- Navigation links (hidden by default) -->
+  <div id="myLinks">
+    <a href="../html/about.html">ABOUT</a>
+    <a href="../html/art.html">ART</a>
+    <a href="../html/tools.html">TOOLS</a>
+    <a href="../html/three.html">THREEJS</a>
+  </div>
+  <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+  <a href="javascript:void(0);" class="icon" onclick="menuMobile()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+<h1>
+    Gradent Generator<br>
+    <button type="button" id="decreaseComplexity()" onclick="decreaseGrade()" >Decrease Grade</button>
+    <button type="button" id="decreaseComplexity()" onclick="increaseGrade()" >Increase Grade</button>
+    <button type="button" id="generateGradient()" onclick="CTXclear()" >Reset Gradient</button>
+    <br>
+    <button type="button" id="partyMode()" onclick="partyMode()" >Party Mode</button> <br>
+
+    <h3>
+        <label for="fname">color1:</label><input type="text" id="color1" name="color1"><br>
+        <label for="lname">color2:</label><input type="text" id="color2" name="color2"><br>
+        <button type="button" id="custom()" onclick="custom()" >Custom</button> <br>
+        <i>Hex values (no '0x' or '#' needed)</i>
+    </h3>
+    <p2><br></p2>
+
+</h1>
+<body>
+    <canvas id="myCanvas" 
+		width="300"
+		height="300" 
+		style="border:1px solid #000000;">
+    </canvas>
+
+    <script>
+    //CANVAS setup vars//
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+
+    var x0 = 1;
+    var y0 = 0;
+    var x1 = 0; 
+    var y1 = 300;
+    generateGradient();
+
+    function decreaseGrade(){
+        x0 = x0+10;
+        y0 = y0+10;
+        x1 = x1+10;
+        y1 = y1+10;
+        generateGradient();
+    }
+
+    function increaseGrade(){
+        x0 = x0-10;
+        y0 = y0-10;
+        x1 = x1-10;
+        y1 = y1-10;
+        generateGradient();
+    }
+
+    function generateGradient(){
+        //ctx.clearRect(0, 0, c.width, c.height);
+        var grd = ctx.createLinearGradient(x0, y0, x1, y1);
+        grd.addColorStop(0, "black");
+        grd.addColorStop(1, "white");
+            // Fill with gradient
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, 300, 300);
+    }
+        
+    function CTXclear(){
+        console.log('Clear function called');
+        location.reload();
+    }
+
+    function getRandomColor() {
+          this.letters = "123456789ABCDEF";
+          this.color = "#";
+          for (var i = 0; i < 6; i++) {
+          this.color += this.letters[Math.floor(Math.random() * 16)];
+          }
+          return this.color;
+        }
+
+    function partyMode(){
+        try{
+        var numberofGrades = 4;
+        var wonk = Math.floor(Math.random()*300)
+        var grd = ctx.createLinearGradient(x0 + wonk, y0 - wonk, x1, y1);
+
+        for (i = 0; i < numberofGrades; i++){
+            color1 = getRandomColor();
+            color2 = getRandomColor();
+            color3 = getRandomColor();
+            color4 = getRandomColor();
+                }
+            grd.addColorStop(0, color1);
+            grd.addColorStop(0.25, color2);
+            grd.addColorStop(0.50, color3);
+            grd.addColorStop(0.75, color4);
+            ctx.fillStyle = grd;
+            ctx.fillRect(0, 0, 300, 300);
+            } catch (error){
+                console.log('PartyRNDcolorERROR - loop')
+                partyMode();
+            }
+    }   
+
+    function custom() {
+    //ctx.clearRect(0, 0, c.width, c.height);
+
+    // Get the value of the input fields
+    const inputField1 = document.getElementById('color1');
+    const inputField2 = document.getElementById('color2');
+            
+    // Corrected to use inputField1 and inputField2 to retrieve the values
+    const color1 = '#'+inputField1.value;
+    const color2 = '#'+inputField2.value;
+
+    // Assuming x0, y0, x1, y1 are defined somewhere else or are static values
+   // var x0 = 0, y0 = 0, x1 = 300, y1 = 0; // Example linear gradient coordinates
+    var grd = ctx.createLinearGradient(x0, y0, x1, y1);
+    grd.addColorStop(0, color1);
+    grd.addColorStop(1, color2);
+
+    // Fill with gradient
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, 300, 300);
+}
+
+        </script>
+
+    <script>
+        window.onscroll = function() {navSticky()};
+        
+        var navbar = document.getElementById("topnav");
+        var sticky = navbar.offsetTop;
+        
+        function navSticky() {
+          if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+          } else {
+            navbar.classList.remove("sticky");
+          }
+        }
+
+        /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+        function menuMobile() {
+        var x = document.getElementById("myLinks");
+        if (x.style.display === "block") {
+        x.style.display = "none";
+           } else {
+        x.style.display = "block";
+        }
+        }
+
+        
+        </script>
+
+<div>
+
+</body>
+</html>
+
+</body>
+</html>
