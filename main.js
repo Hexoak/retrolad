@@ -301,7 +301,7 @@ scene.add(ambientLight);
 
 //CAMERA
       //camera.position.set (0.02455025546271905, .75, 2.8845399382057404);
-      //const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
        // Set camera position and add swaying effect
        var cameraOffset = new THREE.Vector3(-.02, .25, 2); // Offset of the camera from the playerObject
@@ -312,6 +312,7 @@ scene.add(ambientLight);
       function animate() {
         requestAnimationFrame(animate);
         snowflakesFall();
+        
 
                    // Calculate sway
                    var time = performance.now() * 0.001; // Get time for oscillation
@@ -325,6 +326,8 @@ scene.add(ambientLight);
        
                    // Make the camera look at the playerObject
                    camera.lookAt(0,.5,0);
+
+                   controls.update();
 
         //DEBUG
             //console.log(camera.position.x, camera.position.y, camera.position.z);
