@@ -7,7 +7,7 @@ import {THREEx} from './assets/threex.volumetricspotlightmaterial.js';
 
 // Set up Three.js scene
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, 540/320, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer({
 alpha: false,
 antialias: false,
