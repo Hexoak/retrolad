@@ -6,24 +6,43 @@ import { createNPCs } from "./npc.js";
 import {THREEx} from './assets/threex.volumetricspotlightmaterial.js';
 
 // Set up Three.js scene
-       var scene = new THREE.Scene();
-       var camera = new THREE.PerspectiveCamera(75, 540/320, 0.1, 1000);
-       var renderer = new THREE.WebGLRenderer({
-     alpha: false,
-     antialias: false,
-     depth: true,
-     stencil: true,
-     premultipliedAlpha: true,
-     preserveDrawingBuffer: false,
-     powerPreference: 'default',
-     failIfMajorPerformanceCaveat: false,
-     precision: 'lowp',
-     logarithmicDepthBuffer: false,
-     autoClear: true
- });
-   //renderer.setSize(window.innerWidth, window.innerHeight);
-       renderer.setSize(540,320);
-   document.body.appendChild(renderer.domElement);;
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, 540/320, 0.1, 1000);
+var renderer = new THREE.WebGLRenderer({
+alpha: false,
+antialias: false,
+depth: true,
+stencil: true,
+premultipliedAlpha: true,
+preserveDrawingBuffer: false,
+powerPreference: 'default',
+failIfMajorPerformanceCaveat: false,
+precision: 'lowp',
+logarithmicDepthBuffer: false,
+autoClear: true
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById('container').appendChild(renderer.domElement);
+
+window.addEventListener('orientationchange', function() {
+if (window.orientation === 90 || window.orientation === -90) {
+ // Landscape orientation
+ document.body.style.transform = 'rotate(-90deg)';
+ document.body.style.transformOrigin = 'top left';
+ document.body.style.width = '100vh';
+ document.body.style.height = '100vw';
+ document.body.style.overflow = 'hidden';
+ document.documentElement.style.overflow = 'hidden';
+} else {
+ // Portrait orientation
+ document.body.style.transform = '';
+ document.body.style.transformOrigin = '';
+ document.body.style.width = '';
+ document.body.style.height = '';
+ document.body.style.overflow = '';
+ document.documentElement.style.overflow = '';
+}
+});
 
      //TextureLoader
      const textureLoader = new THREE.TextureLoader();
