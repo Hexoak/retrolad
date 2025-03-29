@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Flappy Platforms</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.54.0/phaser.min.js"></script>
+  <style>
+    body {
+      margin: 25;
+      padding: 25;
+
+    }
+  </style>
+</head>
+<body>
+  <script>
+    var config = {
+      type: Phaser.AUTO,
+      width: 400,
+      height: 600,
+      physics: {
+        default: 'arcade',
+      backgroundColor: "AAA",
+        arcade: {
+          gravity: { y: 0 },
+          debug: false
+        }
+      },
+      scene: {
+        preload: preload,
+        create: create,
+        update: update
+      }
+    };
+
+    var game = new Phaser.Game(config);
+
+//define game Vars
+    var player;
+    var pipes;
+    var plats;
+    var score = 0;
+    var scoreText;
+    var totalScore;
+    var endTimer;
+
+    function preload() {
+      this.load.image('player', 'assets/player.gif');
+      this.load.image('pipe', 'assets/horzpipe.gif');
+      this.load.image('platform', 'assets/platform.gif');
+      this.load.image('wall', 'assets/wall.gif');
+      this.load.image('gameover', 'assets/gameover.gif');
+    }
+
+    function create() {
+
+//image init
+
+//Create Walls
+      lWall = this.physics.add.sprite(4, 300, 'wall');
+      lWall.setTint('0xdd3333');
+      lWall.setImmovable(true);
+      rWall = this.physics.add.sprite(396,300, 'wall');
+      rWall.setTint('0xdd3333');
+      rWall.setImmovable(true);
+
+//Add player and logic
+      player = this.physics.add.sprite(200, 0, 'player');
+      player.setCollideWorldBounds(false);
+      player.setGravityY(500);
+
+//create game items
+      pipes = this.physics.add.group();
+      plats = this.physics.add.group();
+
+//create colliders
+      this.physics.add.collider(player, pipes, gameOver, null, this);
+      this.physics.add.collider(player, lWall, gameOver, null, this);
+      this.physics.add.collider(player, rWall, gameOver, null, this);
+      this.physics.add.collider(player, plats, gameOver, null, this);
+      
+
+//Add score counter
+      scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '16px', fill: '#ffffff' });
+
+//Create input triggers
+      onClick = this.input.on('pointerdown', flap, this);
+      cursors = this.input.keyboard.addKeys({
+        up: Phaser.Input.Keyboard.KeyCodes.W,
+        down: Phaser.Input.Keyboard.KeyCodes.S,
+        left: Phaser.Input.Keyboard.KeyCodes.A,
+        right: Phaser.Input.Keyboard.KeyCodes.D
+      });
+
+
+// Timer to create pipes
+      this.time.addEvent({
+        delay: 700,
+        callback: createPipe,
+        callbackScope: this,
+        loop: true
+      });
+//timer to create platforms
+      this.time.addEvent({
+        delay: 1200,
+        callback: createPlat,
+        callbackScope: this,
+        loop: true
+      });
+
+//**camera - Init and follow player */
+      const camera = this.cameras.main;
+      this.cameras.main.zoom = 1;
+      //this.camera.startFollow(player);
+      //this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+//initial platform
+var platform0 = plats.create(160,300, 'platform');
+      platform0.setOrigin(0, 0);
+      platform0.setVelocityX(0);
+      platform0.setVelocityY(-100)
+      platform0.setImmovable(false);
+      platform0.setTint ('0xdd3333');
+    }
+
+    function update() {
+      handleInput();
+      if (player.angle < 10) {
+        player.angle += 1;
+      }
+
+      if (player.y > 800) {
+        console.log('over');
+        this.scene.restart();
+        }
+      if (player.y < -100) {
+        console.log('over');
+        gameOver();
+        }
+
+
+    }
+
+    function flap() {
+      if (player.body.onFloor()){
+        this.jumpOK = true;
+      }
+      if (jumpOK = true){
+      player.setVelocityY(-315);
+      }
+      this.tweens.add({
+        targets: player,
+        angle: -10,
+        duration: 100
+      });
+      score = score-1; 
+    }
+
+    function handleInput(){
+      if (cursors.left.isDown) {
+        player.setVelocityX(-160);
+      } else if (cursors.right.isDown) {
+        player.setVelocityX(160);
+      } else {
+        player.setVelocityX(0);
+      }
+
+      if (cursors.up.isDown && player.body.touching.down) {
+        player.setVelocityY(-400);
+      }
+    }
+
+    
+
+    function createPipe() {
+      var holePosition = Phaser.Math.Between(400, 0);
+      var gravRnd = Phaser.Math.Between(-10, 30);
+      var xRand = Phaser.Math.Between(0, 400);
+      var yRand = Math.random() *-100 + 700
+      var shiftVar = Phaser.Math.Between (-1,1);
+
+      var pipe1 = pipes.create(holePosition, yRand, 'pipe');
+      pipe1.setOrigin(0, 1);
+      pipe1.setVelocityX(0);
+      pipe1.setVelocityY(-100);
+      pipe1.setGravityY(gravRnd*-1);
+      pipe1.setGravityX(gravRnd*shiftVar);
+      pipe1.setTint('0xdd3333');
+
+
+      var pipe2 = pipes.create(holePosition,yRand, 'pipe');
+      pipe2.setOrigin(0, 0);
+      pipe2.setVelocityX(0);
+      pipe2.setVelocityY(-128)
+      pipe2.setGravityY(gravRnd*-1);
+      pipe2.setGravityX(gravRnd*shiftVar);
+      pipe2.setTint('0xdd3333');
+
+      var pipe3 = pipes.create(holePosition,yRand,'pipe');
+      pipe3.setOrigin(0, 0);
+      pipe3.setVelocityX(0);
+      pipe3.setVelocityY(-170)
+      pipe3.setGravityY(gravRnd*-.45);
+      pipe3.setGravityX(gravRnd*shiftVar);
+      pipe3.setImmovable(false)
+      pipe3.setTint('0xdd3333');
+      //pipe3.setTint('0xdd3333');
+
+      this.physics.add.collider(player, pipe1);
+      this.physics.add.collider(player, pipe2);
+      this.physics.add.collider(player, pipe3);
+
+    }
+
+    function createPlat(){
+      var Platx = Phaser.Math.Between (0,400);
+      var platform1 = plats.create(Platx,600, 'platform');
+      platform1.setOrigin(0, 0);
+      platform1.setVelocityX(0);
+      platform1.setVelocityY(-100)
+      platform1.setImmovable(false);
+      platform1.setTint ('0xdd3333');
+
+      var platform2 = plats.create(Platx,600, 'platform');
+      platform2.setOrigin(0, 0);
+      platform2.setVelocityX(0);
+      platform2.setVelocityY(-100)
+      platform2.setImmovable(true);
+      platform2.setTint('0xdd3333')
+      
+      this.physics.add.collider(platform1,pipes);
+      
+
+      score = score += 1;
+      totalScore = score;
+      scoreText.setText('Score: ' + score);
+      
+    }
+
+    function gameOver() {
+      scoreText.setText('Score: ' + totalScore);
+      score = 0;
+      player.setTint(0xff0000);
+      this.physics.add.image(200,200,'gameover');
+      restartTrigger();
+    }
+
+    function restartTrigger(){
+      
+
+    }
+  </script>
+</body>
+</html>
