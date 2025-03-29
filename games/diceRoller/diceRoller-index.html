@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+</head>
+<body>
+    <script>
+        const config = {
+            type: Phaser.AUTO,
+            width: 512,
+            height: 512,
+            physics: { 
+                default: 'arcade', 
+                arcade: { gravity: { y: 300 }, debug: false } 
+            },
+            scene: { preload, create }
+        };
+
+        let diceSprites = [];
+        let totalText;
+
+        const game = new Phaser.Game(config);
+
+        function preload() {
+            this.load.spritesheet('dice', 'dice-spritesheet.png', { frameWidth: 32, frameHeight: 32 });
+        }
+
+        function create() {
+            this.physics.world.setBounds(0, 0, 512, 512); // Set bounds for world
+            this.input.on('pointerdown', (pointer) => rollDice(this, pointer.x, pointer.y));
+            totalText = this.add.text(256, 20, '', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5);
+        }
+
+        function rollDice(scene, x, y) {
+            if (diceSprites.length > 0) {
+                diceSprites.forEach(die => die.destroy());
+                diceSprites = [];
+            }
+
+            let finalValues = [];
+
+            for (let i = 0; i < 2; i++) {
+                let dice = scene.physics.add.sprite(x, y, 'dice').setScale(2);
+                dice.setBounce(0.6);
+                dice.setCollideWorldBounds(true);
+                diceSprites.push(dice);
+
+                let rollAnimKey = `roll-${Phaser.Math.Between(0, 36)}`;
+                let shuffledFrames = Phaser.Utils.Array.Shuffle(
+                    Array.from({ length: 36 }, (_, i) => i)
+                );
+
+                scene.anims.create({
+                    key: rollAnimKey,
+                    frames: shuffledFrames.map(frame => ({ key: 'dice', frame })),
+                    frameRate: 6,
+                    repeat: -1
+                });
+
+                dice.play(rollAnimKey);
+
+                dice.setVelocity(Phaser.Math.Between(-250, 250), Phaser.Math.Between(-150, 150));
+
+                let rollDuration = Phaser.Math.Between(900, 1400);
+
+                scene.time.delayedCall(rollDuration, () => {
+                    let finalFrame = Phaser.Math.Between(0, 5);
+                    dice.stop();
+                    dice.setFrame(finalFrame);
+                    finalValues.push(finalFrame + 1);
+                    dice.setVelocity(0, 0);
+
+                    if (finalValues.length === 2) {
+                        let total = finalValues[0] + finalValues[1];
+                        totalText.setText(`Total: ${total}`);
+                    }
+                });
+            }
+
+            // Enable collision between dice
+            if (diceSprites.length === 3) {
+                scene.physics.add.collider(diceSprites[0], diceSprites[1]);
+            }
+        }
+    </script>
+</body>
+</html>
