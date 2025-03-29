@@ -1,0 +1,158 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111; /* Black background */
+    color: white; /* White text */
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background-color: mintgreen; /* Mint green header background */
+    padding: 8px;
+    text-align: center;
+    border-bottom: 2px solid #888; /* Subtle gray line */
+}
+
+header h1 {
+    color: #88d486; /* Dark text for contrast */
+    font-size: 24px;
+    margin: 0;
+}
+
+header nav {
+    margin-top: 10px;
+}
+
+header nav a {
+    color: #88d486; /* Dark text color */
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+header nav a:hover {
+    color: mintgreen; /* Mint green on hover */
+}
+
+h1{
+    color: gray;
+    font-size:18px;
+}
+
+h2{
+    color: gray;
+    font-size:18px;
+    text-align: center;
+}
+/* Main Content Area */
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.left-column {
+    width: 30%; /* Image section takes 60% of the space */
+    padding-right: 8px;
+}
+
+.right-column {
+    width: 70%; /* Text section takes 35% of the space */
+    background-color: #222; /* Slightly lighter gray for contrast */
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid mintgreen; /* Mint green border */
+}
+
+.right-column h2 {
+    color: mintgreen; /* Mint green headings */
+    font-size: 14px;
+}
+
+.right-column p {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* Article Images */
+.left-column img {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* Center Column for Image Display */
+.centered {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.center-column {
+    width: 50%; /* Adjust width as needed */
+    text-align: center;
+}
+
+.center-column img {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+button {
+    background-color: mintgreen;
+    color: #111; /* Dark text */
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #111;
+    color: mintgreen;
+    border: 2px solid mintgreen; /* Mint green border on hover */
+}
+
+/* Footer */
+footer {
+    background-color: mintgreen; /* Mint green footer background */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: mintgreen; /* Mint green on hover */
+}
+
+a {
+    color: mintgreen; /* Default link color */
+    text-decoration: none;
+}
+
+a:visited {
+    color: mintgreen; /* Color for visited links */
+}
+
+a:hover {
+    color: gray; /* Color when hovering */
+}
+
+a:active {
+    color:  mintgreen; /* Color when the link is clicked */
+    background-color: black; /* Optional: adds a background effect */
+}
