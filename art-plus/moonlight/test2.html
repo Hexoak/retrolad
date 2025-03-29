@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phaser Lighting Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<script>
+  const config = {
+    type: Phaser.WEBGL,
+    width: 512,
+    height: 512,
+    scene: {
+      preload: preload,
+      create: create,
+      update: update
+    },
+    lights: {
+      active: true,
+    }
+  };
+
+  const game = new Phaser.Game(config);
+
+  let fogLayer;
+  let player;
+
+  function preload() {
+    //Load the sprite and its normal map together
+    this.load.image('layer1', './src/bg.png');
+    this.load.image('layer1-normal', './src/bg-normal.png');
+    this.load.image('layer2', './src/midbg.png');
+    this.load.image('layer2-normal', './src/midbg-normal.png');
+    this.load.image('layer3', './src/1trees1.png');
+    this.load.image('layer3-normal', './src/1trees1-normal.png');
+    this.load.image('layer4', './src/2trees2.png');
+    this.load.image('layer4-normal', './src/2trees2-normal.png');
+    this.load.image('layer5', './src/3trees1.png');
+    this.load.image('layer5-normal', './src/3trees1-normal.png');
+    this.load.image('layer6', './src/foreground.png');
+    this.load.image('layer6-normal', './src/foreground-normal.png');
+    //this.load.image('player', './src/player.png')
+    this.load.image('player-normal','./src/player-normal.png');
+    this.load.image('fog', './src/fog.png')
+    this.load.image('fog-normal', './src/fog-normal.png')
+    this.load.image('fog2', './src/fog2.png')
+    this.load.image('fog-normal', './src/fog-normal2.png')
+
+    this.load.spritesheet('player', './src/player-spritesheet.png', {
+                frameWidth: 512,
+                frameHeight: 512,
+                endFrame: 16,
+            });
+  }
+
+  function create() {
+    // Enable the lighting system
+    this.lights.enable();
+    this.lights.setAmbientColor(0x000000); // Set ambient light to black
+
+    // Add a light source for the flickering effect
+    this.light = this.lights.addLight(280, 420, 400, 0xd0d680, 1);
+    
+
+    // Add a moonlight effect at (100, 100)
+    this.moonLight = this.lights.addLight(135, 60, 4000, 0xadd8e6, 1); // Soft blue-white glow
+    this.moonLight.setIntensity(2);
+
+    // Add a timed event for the original light's flickering effect
+    this.time.addEvent({
+      delay: 290, // Flicker every 100ms
+      callback: () => {
+        const randomIntensity = Phaser.Math.FloatBetween(1.2, 2); // Flicker between 0.8 and 1.2 intensity
+        this.light.setIntensity(randomIntensity);
+
+        const randomRadius = Phaser.Math.Between(300, 350); // Flicker radius between 350 and 450
+        this.light.setRadius(randomRadius);
+      },
+      loop: true
+    });
+
+    // Create the animation for the player using frames from the spritesheet
+        this.anims.create({
+              key: 'playerAnim',  // Name of the animation
+              frames: this.anims.generateFrameNames('player', { start: 0, end: 15 }), // Frames 0-5
+              frameRate: 4, // Animation speed (frames per second)
+              repeat: -1 // Loop the animation forever
+          });
+        // Add a sprite for the player animation (position it at the center of the game world)
+          player = this.add.sprite(228,266, 'player').play('playerAnim'); // Sprite starts aligned with Layer 3
+          player.setDepth(14);
+
+    // Add the sprites with their respective pipelines and depths
+    const layer1 = this.add.image(256, 256, 'layer1');
+    layer1.setPipeline('Light2D');
+    layer1.setDepth(2);
+
+    const layer2 = this.add.image(256, 276, 'layer2');
+    layer2.setPipeline('Light2D');
+    layer2.setDepth(4);
+
+    const layer3 = this.add.image(256, 256, 'layer3');
+    layer3.setPipeline('Light2D');
+    layer3.setDepth(10);
+
+    const layer4 = this.add.image(256, 256, 'layer4');
+    layer4.setPipeline('Light2D');
+    layer4.setDepth(8);
+
+    const layer5 = this.add.image(256, 256, 'layer5');
+    layer5.setPipeline('Light2D');
+    layer5.setDepth(6);
+
+    //fog
+    fogLayer = this.add.tileSprite(256,256,512,512, 'fog')
+    fogLayer.setPipeline('Light2D')
+    fogLayer.setDepth(4)
+
+        //fog2
+        fogLayer2 = this.add.tileSprite(256,256,512,512, 'fog2')
+    fogLayer2.setPipeline('Light2D')
+    fogLayer2.setDepth(15)
+
+    const layer6 = this.add.image(256, 256, 'layer6');
+    layer6.setPipeline('Light2D');
+    layer6.setDepth(12);
+
+    //const player = this.add.image(256,256,'player')
+    player.setPipeline('Light2D');
+    player.setDepth(14)
+
+    // Assign the normal maps correctly to each layer
+    this.textures.getFrame('layer1').normalMap = this.textures.get('layer1-normal');
+    this.textures.getFrame('layer2').normalMap = this.textures.get('layer2-normal');
+    this.textures.getFrame('layer3').normalMap = this.textures.get('layer3-normal');
+    this.textures.getFrame('layer4').normalMap = this.textures.get('layer4-normal');
+    this.textures.getFrame('layer5').normalMap = this.textures.get('layer5-normal');
+    this.textures.getFrame('layer6').normalMap = this.textures.get('layer6-normal');
+    this.textures.getFrame('player').normalMap = this.textures.get('player-normal');
+    this.textures.getFrame('fog').normalMap = this.textures.get('fog-normal');
+    this.textures.getFrame('fog2').normalMap = this.textures.get('fog-normal2');
+  
+  }
+
+  function update() {
+    // No flicker logic here; the timed event handles the effect
+
+    fogLayer.tilePositionX += -0.35;
+    fogLayer2.tilePositionX += -0.25;
+    
+
+  }
+</script>
+</body>
+</html>

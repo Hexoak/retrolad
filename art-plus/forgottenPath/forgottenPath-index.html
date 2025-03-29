@@ -1,0 +1,214 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.24.1/dist/phaser.min.js"></script>
+</head>
+<body>
+    <div id="game"></div>
+    <script>
+        const phaserConfig = {
+            type: Phaser.AUTO,
+            parent: "game",
+            width: 256,  // Viewport size (matches canvas)
+            height: 256, // Viewport size (matches canvas)
+            backgroundColor: "#000", // Black background for better visibility
+            scene: {
+                preload: preloadScene,
+                create: createScene,
+                update: updateScene,
+            }
+        };
+
+        const game = new Phaser.Game(phaserConfig);
+
+        let layer1, layer2, layer3;
+        let snowLayer, snowflakes = [];
+        let snowLayer2, snowflakes2 = [];
+        let animatedSprite;  // To store the animated sprite
+        let camera;
+        let scrollSpeed = .5;  // Scroll speed per frame
+        let dither;  // Dither sprite
+
+        function preloadScene() {
+            this.load.image("l1", "./src/background.gif");
+            this.load.image("l2", "./src/foreground.gif");
+            this.load.image("l2a", "./src/layer_2(fog1).png");
+            //this.load.image("l3", "./src/midground1.gif");
+            this.load.image("l5a", "./src/layer(fog2).png");
+            this.load.image("l6", "./src/clouds.gif");
+            this.load.image("l7", "./src/clouds2.gif");
+
+            // Load the spritesheets (assuming your spritesheet is called "animation.png")
+            this.load.spritesheet('lanternman', './src/layer3_spritesheet.png', {
+                frameWidth: 256,  // Width of each frame
+                frameHeight: 512, // Height of each frame
+                endFrame: 5      // The last frame in the spritesheet (0-5 for 6 frames)
+            });
+
+            this.load.spritesheet('radial', './src/radial.png', {
+                frameWidth: 256,  // Width of each frame
+                frameHeight: 512, // Height of each frame
+                endFrame: 5      // The last frame in the spritesheet (0-5 for 6 frames)
+            });
+        }
+
+        function createScene() {
+            // Initialize the camera reference
+            camera = this.cameras.main;
+
+            // Set the bounds to match the full game world size (256x512)
+            camera.setBounds(0, 0, 256, 512);  // Full game world size
+
+            // Set the initial camera position to the bottom of the world (y = 256)
+            camera.scrollY = 256; // Camera starts at the bottom of the world
+
+            // Create the background layers (tile sprites)
+            layer1 = this.add.tileSprite(128, 256, 256, 512, "l1");
+            layer2 = this.add.tileSprite(128, 256, 256, 512, "l2");
+            layer2a = this.add.tileSprite(128, 256, 256, 512, "l2a");
+            //layer3 = this.add.tileSprite(128, 256, 256, 512, "l3");
+            layer5a = this.add.tileSprite(128, 260, 256, 512, "l5a");
+            layer6 = this.add.tileSprite(128,256,256,512, "l6");
+            layer7 = this.add.tileSprite(128,256,256,512, "l7");
+
+            // Transparent snow layers
+            snowLayer = this.add.graphics();
+            snowLayer2 = this.add.graphics();
+
+            // Set Layer Depths
+            layer1.setDepth(1);
+            layer2a.setDepth(6);
+            layer2.setDepth(8);
+            //layer3.setDepth(3);
+            layer5a.setDepth(5);
+            snowLayer2.setDepth(7);
+            snowLayer.setDepth(9);
+            layer6.setDepth(3);
+            layer7.setDepth(4);
+
+            // Create the animation for the snowman using frames from the spritesheet
+            this.anims.create({
+                key: 'snowmanAnim',  // Name of the animation
+                frames: this.anims.generateFrameNames('lanternman', { start: 0, end: 5 }), // Frames 0-5
+                frameRate: 2, // Animation speed (frames per second)
+                repeat: -1 // Loop the animation forever
+            });
+
+            // Add a sprite for the snowman animation (position it at the center of the game world)
+            animatedSprite = this.add.sprite(128, 220, 'lanternman').play('snowmanAnim'); // Sprite starts aligned with Layer 3
+            animatedSprite.setDepth(3);
+
+            // Create the animation for the dither effect using frames from the spritesheet
+            this.anims.create({
+                key: 'ditherAnim',  // Name of the animation
+                frames: this.anims.generateFrameNames('radial', { start: 0, end: 5 }), // Frames 0-5
+                frameRate: 2, // Animation speed (frames per second)
+                repeat: -1 // Loop the animation forever
+            });
+
+            // Add the dither sprite and play the animation
+            dither = this.add.sprite(128, 220, 'radial').play('ditherAnim');
+            dither.setDepth(3);
+
+            // Initialize snowflakes
+            initSnowflakes(this, {
+                density: 25,
+                size: 2,
+                speed: .5
+            });
+
+            // Initialize snowflakes2
+            initSnowflakes2(this, {
+                density: 40,
+                size: 1.5,
+                speed: 1
+            });
+        }
+
+        function updateScene() {
+            // Move the camera upwards gradually
+            if (camera.scrollY > 0) {
+                camera.scrollY -= scrollSpeed;
+            }
+
+            // Parallax scrolling effect for the layers
+            if (layer1.tilePositionY < 132) {
+                layer1.tilePositionY += 0.27;
+            }
+
+            if (animatedSprite.y > 140) {
+                animatedSprite.y -= 0.1575;
+            }
+
+            // Parallax scrolling for the other layers
+            layer2a.tilePositionX += -0.25;
+            layer5a.tilePositionX += -0.125;
+            layer6.tilePositionX += -0.12;
+            layer7.tilePositionX += -0.175;
+
+            // Update snow effect
+            updateSnowflakes();
+
+            // Debugging: log position of animated sprite
+            //console.log(animatedSprite.y);
+        }
+
+        function initSnowflakes(scene, options) {
+            for (let i = 0; i < options.density; i++) {
+                snowflakes.push({
+                    x: Phaser.Math.Between(0, 256),
+                    y: Phaser.Math.Between(0, 512),
+                    size: Phaser.Math.Between(1, options.size),
+                    speed: Phaser.Math.FloatBetween(0.5, options.speed),
+                    yOffset: Phaser.Math.FloatBetween(-1, 1),
+                    yOffsetDirection: Phaser.Math.Between(0, 1) > 0.5 ? 1 : -1
+                });
+            }
+        }
+
+        function initSnowflakes2(scene, options) {
+            for (let i = 0; i < options.density; i++) {
+                snowflakes2.push({
+                    x: Phaser.Math.Between(0, 256),
+                    y: Phaser.Math.Between(0, 512),
+                    size: Phaser.Math.Between(1, options.size),
+                    speed: Phaser.Math.FloatBetween(0.5, options.speed),
+                    yOffset: Phaser.Math.FloatBetween(-1, 1),
+                    yOffsetDirection: Phaser.Math.Between(0, 1) > 0.5 ? 1 : -1
+                });
+            }
+        }
+
+        function updateSnowflakes() {
+            snowLayer.clear();
+            snowflakes.forEach(flake => {
+                flake.x += flake.speed;
+                flake.yOffset += flake.yOffsetDirection * 0.1;
+                if (Math.abs(flake.yOffset) > 2) {
+                    flake.yOffsetDirection *= -1;
+                }
+                flake.y += flake.speed;
+                if (flake.x > game.config.height) flake.x = 0;
+                if (flake.y > 512) flake.y = 0;
+
+                snowLayer.fillStyle(0xe0dbcd, 1);
+                snowLayer.fillRect(flake.x, flake.y + flake.yOffset, flake.size * 2, flake.size * 2);
+            });
+
+            snowLayer2.clear();
+            snowflakes2.forEach(flake => {
+                flake.x += flake.speed;
+                flake.yOffset += flake.yOffsetDirection * 0.1;
+                if (Math.abs(flake.yOffset) > 2) {
+                    flake.yOffsetDirection *= -1;
+                }
+                flake.y += flake.speed;
+                if (flake.x > game.config.height) flake.x = 0;
+                if (flake.y > 512) flake.y = 0;
+
+                snowLayer2.fillStyle(0xe0dbcd, 1);
+                snowLayer2.fillRect(flake.x, flake.y + flake.yOffset, flake.size, flake.size);
+            });
+        }
+    </script>
+</body>
+</html>
